@@ -58,7 +58,7 @@ const Standings = () => {
       </div>
       <div style={{ marginTop: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
         <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--primary)', marginRight: '5px' }}></span>
-        Clasificados a Octavos de Final
+        Clasificados a 16avos de Final
       </div>
     </div>
   );

@@ -2,23 +2,28 @@ import React from 'react';
 import { standingsData } from '../data/mockData';
 
 const BracketSimulator = () => {
-  // Simulate Round of 16 matchups based on group standings
-  // 1A vs 2B, 1C vs 2D, 1E vs 2F, 1G vs 2H
-  // 1B vs 2A, 1D vs 2C, 1F vs 2E, 1H vs 2G
-
+  // Simulate Round of 32 (16avos) matchups based on 12 groups
   const matchups = [
-    { id: 1, home: standingsData.A[0].team, away: standingsData.B[1].team, label: '1A vs 2B' },
-    { id: 2, home: standingsData.C[0].team, away: standingsData.D[1].team, label: '1C vs 2D' },
-    { id: 3, home: standingsData.E[0].team, away: standingsData.F[1].team, label: '1E vs 2F' },
-    { id: 4, home: standingsData.G[0].team, away: standingsData.H[1].team, label: '1G vs 2H' },
-    { id: 5, home: standingsData.B[0].team, away: standingsData.A[1].team, label: '1B vs 2A' },
-    { id: 6, home: standingsData.D[0].team, away: standingsData.C[1].team, label: '1D vs 2C' },
-    { id: 7, home: standingsData.F[0].team, away: standingsData.E[1].team, label: '1F vs 2E' },
-    { id: 8, home: standingsData.H[0].team, away: standingsData.G[1].team, label: '1H vs 2G' },
+    { id: 1, home: standingsData.A[0].team, away: standingsData.B[2].team, label: '1A vs 3B/C/D' },
+    { id: 2, home: standingsData.B[0].team, away: standingsData.C[1].team, label: '1B vs 2C' },
+    { id: 3, home: standingsData.C[0].team, away: standingsData.D[1].team, label: '1C vs 2D' },
+    { id: 4, home: standingsData.D[0].team, away: standingsData.E[2].team, label: '1D vs 3E/F/G' },
+    { id: 5, home: standingsData.E[0].team, away: standingsData.F[1].team, label: '1E vs 2F' },
+    { id: 6, home: standingsData.F[0].team, away: standingsData.G[1].team, label: '1F vs 2G' },
+    { id: 7, home: standingsData.G[0].team, away: standingsData.H[2].team, label: '1G vs 3H/I/J' },
+    { id: 8, home: standingsData.H[0].team, away: standingsData.I[1].team, label: '1H vs 2I' },
+    { id: 9, home: standingsData.I[0].team, away: standingsData.J[1].team, label: '1I vs 2J' },
+    { id: 10, home: standingsData.J[0].team, away: standingsData.K[2].team, label: '1J vs 3K/L/A' },
+    { id: 11, home: standingsData.K[0].team, away: standingsData.L[1].team, label: '1K vs 2L' },
+    { id: 12, home: standingsData.L[0].team, away: standingsData.A[1].team, label: '1L vs 2A' },
+    { id: 13, home: standingsData.A[1].team, away: standingsData.B[1].team, label: '2A vs 2B' },
+    { id: 14, home: standingsData.E[1].team, away: standingsData.D[2].team, label: '2E vs 3C/D/E' },
+    { id: 15, home: standingsData.G[2].team, away: standingsData.H[1].team, label: '3F/G/H vs 2H' },
+    { id: 16, home: standingsData.I[2].team, away: standingsData.K[1].team, label: '3I/J/K vs 2K' },
   ];
 
-  const leftSide = matchups.slice(0, 4);
-  const rightSide = matchups.slice(4, 8);
+  const leftSide = matchups.slice(0, 8);
+  const rightSide = matchups.slice(8, 16);
 
   const MatchNode = ({ match }) => (
     <div className="glass bracket-match">
@@ -41,8 +46,8 @@ const BracketSimulator = () => {
   return (
     <div className="animate-fade-in">
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h2 style={{ color: 'var(--primary)', marginBottom: '5px' }}>Octavos de Final Simulados</h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Si la fase de grupos terminara hoy</p>
+        <h2 style={{ color: 'var(--primary)', marginBottom: '5px' }}>16avos de Final Simulados</h2>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Con el nuevo formato de 48 equipos (Top 2 + Mejores 8 Terceros)</p>
       </div>
 
       <div className="bracket-container" style={{ paddingBottom: '40px' }}>

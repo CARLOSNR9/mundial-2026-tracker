@@ -47,7 +47,7 @@ const App = () => {
           className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
           onClick={() => setActiveTab('bracket')}
         >
-          <span>🏆</span> Octavos
+          <span>🏆</span> 16avos
         </button>
         <button 
           className={`nav-btn ${activeTab === 'scorers' ? 'active' : ''}`}
