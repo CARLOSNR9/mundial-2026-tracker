@@ -39,16 +39,16 @@ export const teams = {
   uruguay: { id: 'uruguay', name: 'Uruguay', flag: '🇺🇾', group: 'H' },
   cape_verde: { id: 'cape_verde', name: 'Cabo Verde', flag: '🇨🇻', group: 'H' },
   saudi_arabia: { id: 'saudi_arabia', name: 'Arabia Saudita', flag: '🇸🇦', group: 'H' },
-  // Group I (Simulated to complete 12 groups)
-  argentina: { id: 'argentina', name: 'Argentina', flag: '🇦🇷', group: 'I' },
-  denmark: { id: 'denmark', name: 'Dinamarca', flag: '🇩🇰', group: 'I' },
-  algeria: { id: 'algeria', name: 'Argelia', flag: '🇩🇿', group: 'I' },
-  panama: { id: 'panama', name: 'Panamá', flag: '🇵🇦', group: 'I' },
+  // Group I
+  france: { id: 'france', name: 'Francia', flag: '🇫🇷', group: 'I' },
+  norway: { id: 'norway', name: 'Noruega', flag: '🇳🇴', group: 'I' },
+  senegal: { id: 'senegal', name: 'Senegal', flag: '🇸🇳', group: 'I' },
+  iraq: { id: 'iraq', name: 'Irak', flag: '🇮🇶', group: 'I' },
   // Group J
-  france: { id: 'france', name: 'Francia', flag: '🇫🇷', group: 'J' },
-  senegal: { id: 'senegal', name: 'Senegal', flag: '🇸🇳', group: 'J' },
-  chile: { id: 'chile', name: 'Chile', flag: '🇨🇱', group: 'J' },
-  vietnam: { id: 'vietnam', name: 'Vietnam', flag: '🇻🇳', group: 'J' },
+  argentina: { id: 'argentina', name: 'Argentina', flag: '🇦🇷', group: 'J' },
+  austria: { id: 'austria', name: 'Austria', flag: '🇦🇹', group: 'J' },
+  algeria: { id: 'algeria', name: 'Argelia', flag: '🇩🇿', group: 'J' },
+  jordan: { id: 'jordan', name: 'Jordania', flag: '🇯🇴', group: 'J' },
   // Group K
   colombia: { id: 'colombia', name: 'Colombia', flag: '🇨🇴', group: 'K' },
   italy: { id: 'italy', name: 'Italia', flag: '🇮🇹', group: 'K' },
@@ -58,7 +58,7 @@ export const teams = {
   england: { id: 'england', name: 'Inglaterra', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', group: 'L' },
   ghana: { id: 'ghana', name: 'Ghana', flag: '🇬🇭', group: 'L' },
   croatia: { id: 'croatia', name: 'Croacia', flag: '🇭🇷', group: 'L' },
-  norway: { id: 'norway', name: 'Noruega', flag: '🇳🇴', group: 'L' },
+  poland: { id: 'poland', name: 'Polonia', flag: '🇵🇱', group: 'L' },
 };
 
 // Real Standings as of June 23, 2026 (Extrapolated to fill games)
@@ -94,34 +94,34 @@ export const standingsData = {
     { team: teams.curacao, p: 2, w: 0, d: 1, l: 1, gf: 1, ga: 7, gd: -6, pts: 1 },
   ],
   F: [
-    { team: teams.netherlands, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 2, gd: 1, pts: 4 },
-    { team: teams.japan, p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, gd: 0, pts: 4 },
-    { team: teams.sweden, p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 3, gd: -1, pts: 3 },
-    { team: teams.tunisia, p: 3, w: 0, d: 0, l: 3, gf: 0, ga: 5, gd: -5, pts: 0 },
+    { team: teams.netherlands, p: 2, w: 1, d: 1, l: 0, gf: 7, ga: 3, gd: 4, pts: 4 },
+    { team: teams.japan, p: 2, w: 1, d: 1, l: 0, gf: 6, ga: 2, gd: 4, pts: 4 },
+    { team: teams.sweden, p: 2, w: 1, d: 0, l: 1, gf: 6, ga: 6, gd: 0, pts: 3 },
+    { team: teams.tunisia, p: 2, w: 0, d: 0, l: 2, gf: 1, ga: 9, gd: -8, pts: 0 },
   ],
   G: [
-    { team: teams.egypt, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 2, gd: 1, pts: 4 },
-    { team: teams.iran, p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 3, gd: -1, pts: 2 },
-    { team: teams.belgium, p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 3, gd: -1, pts: 2 },
-    { team: teams.new_zealand, p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 4, gd: -3, pts: 1 },
+    { team: teams.egypt, p: 2, w: 1, d: 1, l: 0, gf: 4, ga: 2, gd: 2, pts: 4 },
+    { team: teams.iran, p: 2, w: 0, d: 2, l: 0, gf: 2, ga: 2, gd: 0, pts: 2 },
+    { team: teams.belgium, p: 2, w: 0, d: 2, l: 0, gf: 1, ga: 1, gd: 0, pts: 2 },
+    { team: teams.new_zealand, p: 2, w: 0, d: 1, l: 1, gf: 3, ga: 5, gd: -2, pts: 1 },
   ],
   H: [
-    { team: teams.spain, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 2, gd: 1, pts: 4 },
-    { team: teams.uruguay, p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 3, gd: -1, pts: 2 },
-    { team: teams.cape_verde, p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 2, gd: -1, pts: 2 },
-    { team: teams.saudi_arabia, p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 4, gd: -3, pts: 1 },
+    { team: teams.spain, p: 2, w: 1, d: 1, l: 0, gf: 4, ga: 0, gd: 4, pts: 4 },
+    { team: teams.uruguay, p: 2, w: 0, d: 2, l: 0, gf: 3, ga: 3, gd: 0, pts: 2 },
+    { team: teams.cape_verde, p: 2, w: 0, d: 2, l: 0, gf: 2, ga: 2, gd: 0, pts: 2 },
+    { team: teams.saudi_arabia, p: 2, w: 0, d: 1, l: 1, gf: 1, ga: 5, gd: -4, pts: 1 },
   ],
   I: [
-    { team: teams.argentina, p: 3, w: 3, d: 0, l: 0, gf: 8, ga: 2, gd: 6, pts: 9 },
-    { team: teams.denmark, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, gd: 0, pts: 4 },
-    { team: teams.algeria, p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, gd: -2, pts: 3 },
-    { team: teams.panama, p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 5, gd: -4, pts: 1 },
+    { team: teams.france, p: 2, w: 2, d: 0, l: 0, gf: 6, ga: 1, gd: 5, pts: 6 },
+    { team: teams.norway, p: 2, w: 2, d: 0, l: 0, gf: 7, ga: 3, gd: 4, pts: 6 },
+    { team: teams.senegal, p: 2, w: 0, d: 0, l: 2, gf: 3, ga: 6, gd: -3, pts: 0 },
+    { team: teams.iraq, p: 2, w: 0, d: 0, l: 2, gf: 1, ga: 7, gd: -6, pts: 0 },
   ],
   J: [
-    { team: teams.france, p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 2, gd: 4, pts: 7 },
-    { team: teams.senegal, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, gd: 0, pts: 4 },
-    { team: teams.chile, p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, gd: -2, pts: 3 },
-    { team: teams.vietnam, p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 7, gd: -6, pts: 0 },
+    { team: teams.argentina, p: 2, w: 2, d: 0, l: 0, gf: 5, ga: 0, gd: 5, pts: 6 },
+    { team: teams.austria, p: 2, w: 1, d: 0, l: 1, gf: 3, ga: 3, gd: 0, pts: 3 },
+    { team: teams.algeria, p: 2, w: 1, d: 0, l: 1, gf: 2, ga: 4, gd: -2, pts: 3 },
+    { team: teams.jordan, p: 2, w: 0, d: 0, l: 2, gf: 2, ga: 5, gd: -3, pts: 0 },
   ],
   K: [
     { team: teams.colombia, p: 3, w: 2, d: 1, l: 0, gf: 5, ga: 2, gd: 3, pts: 7 },
@@ -133,7 +133,7 @@ export const standingsData = {
     { team: teams.england, p: 3, w: 1, d: 2, l: 0, gf: 4, ga: 2, gd: 2, pts: 5 },
     { team: teams.ghana, p: 3, w: 1, d: 2, l: 0, gf: 3, ga: 2, gd: 1, pts: 5 },
     { team: teams.croatia, p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, gd: 0, pts: 4 },
-    { team: teams.norway, p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 5, gd: -3, pts: 1 },
+    { team: teams.poland, p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 5, gd: -3, pts: 1 },
   ],
 };
 
