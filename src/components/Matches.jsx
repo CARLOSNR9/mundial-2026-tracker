@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Matches = () => {
@@ -7,6 +7,25 @@ const Matches = () => {
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
   const [editScoreAway, setEditScoreAway] = useState('');
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, []);
+
+  const isMatchLive = (match) => {
+    if (match.status === 'finished') return false; // Ya tiene resultado guardado
+    const matchStart = new Date(match.date);
+    const now = currentTime;
+    const diffMs = now - matchStart;
+    const diffMins = diffMs / 60000;
+    
+    // Consider it live if current time is between start and +120 minutes
+    return diffMins >= 0 && diffMins <= 120;
+  };
 
   const filteredMatches = matches.filter(match => {
     if (filter === 'all') return true;
@@ -53,7 +72,14 @@ const Matches = () => {
           >
             <div className="match-header">
               <span>{match.group ? `Grupo ${match.group}` : match.stage}</span>
-              <span>{formatDate(match.date)}</span>
+              {isMatchLive(match) ? (
+                <span className="live-badge">
+                  <div className="live-dot"></div>
+                  EN VIVO
+                </span>
+              ) : (
+                <span>{formatDate(match.date)}</span>
+              )}
             </div>
             
             <div className="match-teams">
