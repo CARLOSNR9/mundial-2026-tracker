@@ -16,7 +16,7 @@ const Matches = () => {
 
   return (
     <div className="animate-fade-in">
-      <div className="nav-bar" style={{ justifyContent: 'center', marginBottom: '20px' }}>
+      <div className="tab-nav" style={{ justifyContent: 'center', marginBottom: '20px' }}>
         <button className={`nav-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>
           Todos
         </button>

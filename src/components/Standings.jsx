@@ -7,7 +7,7 @@ const Standings = () => {
 
   return (
     <div className="animate-fade-in">
-      <div className="nav-bar" style={{ marginBottom: '20px', paddingBottom: '10px' }}>
+      <div className="tab-nav" style={{ marginBottom: '20px', paddingBottom: '10px' }}>
         {groups.map(group => (
           <button
             key={group}

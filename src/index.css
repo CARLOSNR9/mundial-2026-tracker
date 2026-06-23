@@ -71,7 +71,7 @@ body {
 }
 
 /* Navigation */
-.nav-bar {
+.main-nav, .tab-nav {
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
@@ -80,7 +80,7 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-.nav-bar::-webkit-scrollbar {
+.main-nav::-webkit-scrollbar, .tab-nav::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
@@ -133,6 +133,7 @@ body {
   padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .data-table tbody tr:hover {
@@ -326,7 +327,7 @@ body {
 
 /* Mobile Bottom Nav Overlay */
 @media (max-width: 768px) {
-  .nav-bar {
+  .main-nav {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -354,5 +355,10 @@ body {
   
   .app-title {
     font-size: 2rem;
+  }
+  
+  .data-table th, .data-table td {
+    padding: 12px 10px;
+    font-size: 0.9rem;
   }
 }

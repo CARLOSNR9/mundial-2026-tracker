@@ -30,7 +30,7 @@ const App = () => {
       </main>
 
       {/* Navigation */}
-      <nav className="nav-bar">
+      <nav className="main-nav">
         <button 
           className={`nav-btn ${activeTab === 'standings' ? 'active' : ''}`}
           onClick={() => setActiveTab('standings')}
