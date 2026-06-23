@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { standingsData } from '../data/mockData';
+import React, { useState, useContext } from 'react';
+import { DataContext } from '../context/DataContext';
 
 const Standings = () => {
-  const groups = Object.keys(standingsData);
+  const { standings } = useContext(DataContext);
+  const groups = Object.keys(standings);
   const [activeGroup, setActiveGroup] = useState('A');
 
   // Calculate best 3rd place teams
-  const allThirdPlaces = Object.values(standingsData).map(group => group[2]);
+  const allThirdPlaces = Object.values(standings).map(group => group[2]);
   
   // Sort by pts (desc), then gd (desc), then gf (desc)
   const sortedThirdPlaces = [...allThirdPlaces].sort((a, b) => {
@@ -50,7 +51,7 @@ const Standings = () => {
             </tr>
           </thead>
           <tbody>
-            {standingsData[activeGroup].map((row, index) => {
+            {standings[activeGroup] && standings[activeGroup].map((row, index) => {
               const isTopTwo = index < 2;
               const isQualifiedThird = index === 2 && qualifiedThirdPlaceIds.includes(row.team.id);
               
