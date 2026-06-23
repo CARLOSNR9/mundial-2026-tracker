@@ -141,11 +141,11 @@ export const matchesData = [
   // Past matches
   { id: 1, date: '2026-06-11T12:00:00Z', status: 'finished', home: teams.mexico, away: teams.czechia, scoreHome: 2, scoreAway: 0, group: 'A' },
   { id: 2, date: '2026-06-12T15:00:00Z', status: 'finished', home: teams.usa, away: teams.turkiye, scoreHome: 3, scoreAway: 0, group: 'D' },
-  { id: 3, date: '2026-06-13T12:00:00Z', status: 'finished', home: teams.argentina, away: teams.panama, scoreHome: 3, scoreAway: 1, group: 'I' },
-  { id: 4, date: '2026-06-14T15:00:00Z', status: 'finished', home: teams.france, away: teams.chile, scoreHome: 2, scoreAway: 0, group: 'J' },
-  { id: 5, date: '2026-06-15T12:00:00Z', status: 'finished', home: teams.colombia, away: teams.dr_congo, scoreHome: 2, scoreAway: 0, group: 'K' },
-  { id: 6, date: '2026-06-16T15:00:00Z', status: 'finished', home: teams.england, away: teams.norway, scoreHome: 2, scoreAway: 1, group: 'L' },
-  { id: 7, date: '2026-06-20T12:00:00Z', status: 'finished', home: teams.argentina, away: teams.algeria, scoreHome: 2, scoreAway: 0, group: 'I' },
+  { id: 3, date: '2026-06-13T12:00:00Z', status: 'finished', home: teams.argentina, away: teams.austria, scoreHome: 3, scoreAway: 1, group: 'J' },
+  { id: 4, date: '2026-06-14T15:00:00Z', status: 'finished', home: teams.france, away: teams.senegal, scoreHome: 2, scoreAway: 0, group: 'I' },
+  { id: 5, date: '2026-06-15T12:00:00Z', status: 'finished', home: teams.colombia, away: teams.uzbekistan, scoreHome: 2, scoreAway: 0, group: 'K' },
+  { id: 6, date: '2026-06-16T15:00:00Z', status: 'finished', home: teams.england, away: teams.panama, scoreHome: 2, scoreAway: 1, group: 'L' },
+  { id: 7, date: '2026-06-20T12:00:00Z', status: 'finished', home: teams.argentina, away: teams.algeria, scoreHome: 2, scoreAway: 0, group: 'J' },
   { id: 8, date: '2026-06-21T15:00:00Z', status: 'finished', home: teams.germany, away: teams.ecuador, scoreHome: 3, scoreAway: 1, group: 'E' },
   // Upcoming matches (Round of 32 simulated)
   { id: 9, date: '2026-06-28T10:00:00Z', status: 'upcoming', home: standingsData.A[0].team, away: standingsData.B[2].team, stage: '16avos' },
