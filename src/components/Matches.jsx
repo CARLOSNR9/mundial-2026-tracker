@@ -17,7 +17,6 @@ const Matches = () => {
   }, []);
 
   const isMatchLive = (match) => {
-    if (match.status === 'finished') return false; // Ya tiene resultado guardado
     const matchStart = new Date(match.date);
     const now = currentTime;
     const diffMs = now - matchStart;
