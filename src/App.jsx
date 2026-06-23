@@ -4,6 +4,8 @@ import Matches from './components/Matches';
 import TopScorers from './components/TopScorers';
 import BracketSimulator from './components/BracketSimulator';
 
+import logo from './assets/logo2026.png';
+
 const App = () => {
   const [activeTab, setActiveTab] = useState('standings');
 
@@ -20,6 +22,8 @@ const App = () => {
   return (
     <div className="app-container">
       <header className="app-header">
+        <img src={logo} alt="Mundial 2026 Logo" style={{ width: '80px', height: '80px', marginBottom: '10px', filter: 'drop-shadow(0 0 10px rgba(0, 255, 136, 0.5))' }} />
+        <br />
         <h1 className="app-title">Mundial 2026</h1>
         <div className="app-subtitle">Tracker Oficial</div>
       </header>

@@ -29,8 +29,8 @@ const Standings = () => {
               <th>G</th>
               <th>E</th>
               <th>P</th>
-              <th>GF</th>
-              <th>GC</th>
+              <th className="hide-on-mobile">GF</th>
+              <th className="hide-on-mobile">GC</th>
               <th>DG</th>
               <th>Pts</th>
             </tr>
@@ -47,8 +47,8 @@ const Standings = () => {
                 <td>{row.w}</td>
                 <td>{row.d}</td>
                 <td>{row.l}</td>
-                <td>{row.gf}</td>
-                <td>{row.ga}</td>
+                <td className="hide-on-mobile">{row.gf}</td>
+                <td className="hide-on-mobile">{row.ga}</td>
                 <td>{row.gd > 0 ? `+${row.gd}` : row.gd}</td>
                 <td className="pts-col">{row.pts}</td>
               </tr>

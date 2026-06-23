@@ -358,7 +358,11 @@ body {
   }
   
   .data-table th, .data-table td {
-    padding: 12px 10px;
-    font-size: 0.9rem;
+    padding: 12px 6px;
+    font-size: 0.85rem;
+  }
+  
+  .hide-on-mobile {
+    display: none;
   }
 }
