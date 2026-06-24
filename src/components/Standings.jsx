@@ -228,7 +228,7 @@ const Standings = () => {
           </tbody>
         </table>
       </div>
-      <div style={{ marginTop: '10px', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', gap: '15px' }}>
+      <div style={{ marginTop: '10px', marginBottom: '40px', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', gap: '15px' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--primary)', marginRight: '5px', borderRadius: '50%' }}></span>
           1º y 2º (Clasificados)
@@ -236,6 +236,59 @@ const Standings = () => {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--warning)', marginRight: '5px', borderRadius: '50%' }}></span>
           Mejores Terceros
+        </div>
+      </div>
+
+      <h3 style={{ marginBottom: '15px', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>Clasificación de los mejores terceros</h3>
+      <div className="glass table-container">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>PJ</th>
+              <th>G</th>
+              <th>E</th>
+              <th>P</th>
+              <th className="hide-on-mobile">GF</th>
+              <th className="hide-on-mobile">GC</th>
+              <th>DG</th>
+              <th>Pts</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedThirdPlaces.slice(0, 10).map((row, index) => {
+              const isQualified = index < 8;
+              let borderColor = isQualified ? 'var(--warning)' : 'var(--danger)';
+
+              return (
+                <tr key={row.team.id} style={{ borderLeft: `3px solid ${borderColor}`, opacity: isQualified ? 1 : 0.6 }}>
+                  <td className="team-cell">
+                    <span className="scorer-rank" style={{ fontSize: '1rem', width: '20px' }}>{index + 1}</span>
+                    <span className="flag">{row.team.flag}</span>
+                    <span>{row.team.name}</span>
+                  </td>
+                  <td>{row.p}</td>
+                  <td>{row.w}</td>
+                  <td>{row.d}</td>
+                  <td>{row.l}</td>
+                  <td className="hide-on-mobile">{row.gf}</td>
+                  <td className="hide-on-mobile">{row.ga}</td>
+                  <td>{row.gd > 0 ? `+${row.gd}` : row.gd}</td>
+                  <td className="pts-col" style={{ color: isQualified ? 'var(--primary)' : 'var(--danger)' }}>{row.pts}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ marginTop: '10px', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', gap: '15px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--warning)', marginRight: '5px', borderRadius: '50%' }}></span>
+          Clasificados a 16avos (Top 8)
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--danger)', marginRight: '5px', borderRadius: '50%' }}></span>
+          Eliminados
         </div>
       </div>
     </div>
