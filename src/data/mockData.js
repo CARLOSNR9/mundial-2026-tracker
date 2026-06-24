@@ -213,23 +213,7 @@ export const matchesData = [
   { id: 70, date: '2026-06-27T18:30:00-05:00', status: 'upcoming', home: teams.dr_congo, away: teams.uzbekistan, group: 'K' },
   { id: 71, date: '2026-06-27T21:00:00-05:00', status: 'upcoming', home: teams.jordan, away: teams.argentina, group: 'J' },
   { id: 72, date: '2026-06-27T21:00:00-05:00', status: 'upcoming', home: teams.algeria, away: teams.austria, group: 'J' },
-  // Upcoming matches (Round of 32 simulated)
-  { id: 73, date: '2026-06-28T14:00:00-05:00', status: 'upcoming', home: standingsData.A[1].team, away: standingsData.B[2].team, stage: '16avos' },
-  { id: 74, date: '2026-06-29T12:00:00-05:00', status: 'upcoming', home: standingsData.B[0].team, away: standingsData.C[1].team, stage: '16avos' },
-  { id: 75, date: '2026-06-29T15:30:00-05:00', status: 'upcoming', home: standingsData.E[0].team, away: standingsData.D[1].team, stage: '16avos' },
-  { id: 76, date: '2026-06-29T20:00:00-05:00', status: 'upcoming', home: standingsData.C[0].team, away: standingsData.E[2].team, stage: '16avos' },
-  { id: 77, date: '2026-06-30T12:00:00-05:00', status: 'upcoming', home: standingsData.F[0].team, away: standingsData.G[1].team, stage: '16avos' },
-  { id: 78, date: '2026-06-30T16:00:00-05:00', status: 'upcoming', home: standingsData.G[0].team, away: standingsData.H[2].team, stage: '16avos' },
-  { id: 79, date: '2026-06-30T20:00:00-05:00', status: 'upcoming', home: standingsData.A[0].team, away: standingsData.I[1].team, stage: '16avos' },
-  { id: 80, date: '2026-07-01T11:00:00-05:00', status: 'upcoming', home: standingsData.H[0].team, away: standingsData.J[1].team, stage: '16avos' },
-  { id: 81, date: '2026-07-01T15:00:00-05:00', status: 'upcoming', home: standingsData.I[0].team, away: standingsData.K[1].team, stage: '16avos' },
-  { id: 82, date: '2026-07-01T19:00:00-05:00', status: 'upcoming', home: standingsData.D[0].team, away: standingsData.L[1].team, stage: '16avos' },
-  { id: 83, date: '2026-07-02T14:00:00-05:00', status: 'upcoming', home: standingsData.K[0].team, away: standingsData.A[2].team, stage: '16avos' },
-  { id: 84, date: '2026-07-02T18:00:00-05:00', status: 'upcoming', home: standingsData.L[0].team, away: standingsData.B[2].team, stage: '16avos' },
-  { id: 85, date: '2026-07-02T22:00:00-05:00', status: 'upcoming', home: standingsData.B[1].team, away: standingsData.C[2].team, stage: '16avos' },
-  { id: 86, date: '2026-07-03T13:00:00-05:00', status: 'upcoming', home: standingsData.E[1].team, away: standingsData.F[2].team, stage: '16avos' },
-  { id: 87, date: '2026-07-03T17:00:00-05:00', status: 'upcoming', home: standingsData.J[0].team, away: standingsData.G[2].team, stage: '16avos' },
-  { id: 88, date: '2026-07-03T20:30:00-05:00', status: 'upcoming', home: standingsData.F[1].team, away: standingsData.H[2].team, stage: '16avos' },
+  // End of group matches
 ];
 
 export const topScorers = [

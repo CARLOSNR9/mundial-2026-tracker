@@ -20,6 +20,35 @@ const App = () => {
     }
   };
 
+  const NavigationMenu = ({ isBottom }) => (
+    <nav className={`main-nav ${isBottom ? 'hide-on-mobile' : ''}`} style={isBottom ? { marginTop: '20px', marginBottom: '0' } : {}}>
+      <button 
+        className={`nav-btn ${activeTab === 'standings' ? 'active' : ''}`}
+        onClick={() => setActiveTab('standings')}
+      >
+        <span>📊</span> Posiciones
+      </button>
+      <button 
+        className={`nav-btn ${activeTab === 'matches' ? 'active' : ''}`}
+        onClick={() => setActiveTab('matches')}
+      >
+        <span>⚽</span> Partidos
+      </button>
+      <button 
+        className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
+        onClick={() => setActiveTab('bracket')}
+      >
+        <span>🏆</span> 16avos
+      </button>
+      <button 
+        className={`nav-btn ${activeTab === 'scorers' ? 'active' : ''}`}
+        onClick={() => setActiveTab('scorers')}
+      >
+        <span>👟</span> Goleadores
+      </button>
+    </nav>
+  );
+
   return (
     <DataProvider>
       <div className="app-container">
@@ -30,38 +59,16 @@ const App = () => {
           <div className="app-subtitle">Tracker Oficial</div>
         </header>
 
+        {/* Top Navigation */}
+        <NavigationMenu isBottom={false} />
+
         {/* Main Content Area */}
-        <main style={{ paddingBottom: '60px' }}>
+        <main style={{ paddingBottom: '20px' }}>
           {renderContent()}
         </main>
 
-        {/* Navigation */}
-        <nav className="main-nav">
-          <button 
-            className={`nav-btn ${activeTab === 'standings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('standings')}
-          >
-            <span>📊</span> Posiciones
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'matches' ? 'active' : ''}`}
-            onClick={() => setActiveTab('matches')}
-          >
-            <span>⚽</span> Partidos
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
-            onClick={() => setActiveTab('bracket')}
-          >
-            <span>🏆</span> 16avos
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'scorers' ? 'active' : ''}`}
-            onClick={() => setActiveTab('scorers')}
-          >
-            <span>👟</span> Goleadores
-          </button>
-        </nav>
+        {/* Bottom Navigation (Desktop only) */}
+        <NavigationMenu isBottom={true} />
       </div>
     </DataProvider>
   );
