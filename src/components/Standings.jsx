@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Standings = () => {
-  const { standings, matches, updateMatch } = useContext(DataContext);
+  const { standings, matches, updateMatch, bracket16 } = useContext(DataContext);
   const groups = Object.keys(standings);
   
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -290,6 +290,32 @@ const Standings = () => {
           <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'var(--danger)', marginRight: '5px', borderRadius: '50%' }}></span>
           Eliminados
         </div>
+      </div>
+      <h3 style={{ marginTop: '40px', marginBottom: '15px', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
+        Proyección de 16avos de Final
+      </h3>
+      <div className="card-grid">
+        {bracket16.map(match => (
+          <div key={match.id} className="glass match-card">
+            <div className="match-header">
+              <span>{match.label}</span>
+            </div>
+            <div className="match-teams">
+              <div className="team-row">
+                <div className="team-info">
+                  <span className="flag">{match.home.flag || '❓'}</span>
+                  <span>{match.home.name || 'TBD'}</span>
+                </div>
+              </div>
+              <div className="team-row">
+                <div className="team-info">
+                  <span className="flag">{match.away.flag || '❓'}</span>
+                  <span>{match.away.name || 'TBD'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
