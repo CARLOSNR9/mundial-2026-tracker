@@ -291,33 +291,52 @@ const Standings = () => {
           Eliminados
         </div>
       </div>
-      <h3 style={{ marginTop: '40px', marginBottom: '15px', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
-        Proyección de 16avos de Final
-      </h3>
-      <div className="card-grid">
-        {bracket16.map(match => (
-          <div key={match.id} className="glass match-card">
-            <div className="match-header" style={{ flexDirection: 'column', gap: '5px', alignItems: 'flex-start' }}>
-              <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
-              <span style={{ fontSize: '0.75rem' }}>{match.date} • {match.stadium}</span>
-            </div>
-            <div className="match-teams">
-              <div className="team-row">
-                <div className="team-info">
-                  <span className="flag">{match.home.flag || '❓'}</span>
-                  <span>{match.home.name || 'TBD'}</span>
+      {/* 16avos Projection for Live Teams */}
+      {(() => {
+        const liveTeamIds = liveMatches.flatMap(m => [m.home.id, m.away.id]);
+        const relevantBracket16 = bracket16.filter(m => 
+          (m.home && m.home.id && liveTeamIds.includes(m.home.id)) || 
+          (m.away && m.away.id && liveTeamIds.includes(m.away.id))
+        );
+
+        if (relevantBracket16.length === 0) return null;
+
+        return (
+          <>
+            <h3 style={{ marginTop: '40px', marginBottom: '15px', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
+              Proyección de 16avos de Final (Equipos en Vivo)
+            </h3>
+            <div className="card-grid">
+              {relevantBracket16.map(match => (
+                <div key={match.id} className="glass match-card">
+                  <div className="match-header" style={{ flexDirection: 'column', gap: '5px', alignItems: 'flex-start' }}>
+                    <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
+                    <span style={{ fontSize: '0.75rem' }}>{match.date} • {match.stadium}</span>
+                  </div>
+                  <div className="match-teams">
+                    <div className="team-row">
+                      <div className="team-info">
+                        <span className="flag">{match.home.flag || '❓'}</span>
+                        <span style={{ color: liveTeamIds.includes(match.home.id) ? 'var(--primary)' : 'inherit' }}>
+                          {match.home.name || 'TBD'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="team-row">
+                      <div className="team-info">
+                        <span className="flag">{match.away.flag || '❓'}</span>
+                        <span style={{ color: liveTeamIds.includes(match.away.id) ? 'var(--primary)' : 'inherit' }}>
+                          {match.away.name || 'TBD'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="team-row">
-                <div className="team-info">
-                  <span className="flag">{match.away.flag || '❓'}</span>
-                  <span>{match.away.name || 'TBD'}</span>
-                </div>
-              </div>
+              ))}
             </div>
-          </div>
-        ))}
-      </div>
+          </>
+        );
+      })()}
     </div>
   );
 };
