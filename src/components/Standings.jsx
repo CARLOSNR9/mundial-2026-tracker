@@ -297,8 +297,9 @@ const Standings = () => {
       <div className="card-grid">
         {bracket16.map(match => (
           <div key={match.id} className="glass match-card">
-            <div className="match-header">
-              <span>{match.label}</span>
+            <div className="match-header" style={{ flexDirection: 'column', gap: '5px', alignItems: 'flex-start' }}>
+              <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
+              <span style={{ fontSize: '0.75rem' }}>{match.date} • {match.stadium}</span>
             </div>
             <div className="match-teams">
               <div className="team-row">

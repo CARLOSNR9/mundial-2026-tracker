@@ -144,22 +144,22 @@ const calculateBracket16 = (standings) => {
   };
 
   const matchups = [
-    { id: 73, home: getTeam('A', 2), away: getTeam('B', 2), label: '2A vs 2B' },
-    { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F' },
-    { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I' },
-    { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J' },
-    { id: 83, home: getTeam('K', 1), away: getThirdTeam('1K'), label: '1K vs 3 D/E/I/J/L' },
-    { id: 84, home: getTeam('K', 2), away: getTeam('L', 2), label: '2K vs 2L' },
-    { id: 81, home: getTeam('I', 1), away: getThirdTeam('1I'), label: '1I vs 3 C/D/F/G/H' },
-    { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I' },
-    { id: 76, home: getTeam('E', 1), away: getThirdTeam('1E'), label: '1E vs 3 A/B/C/D/F' },
-    { id: 78, home: getTeam('D', 2), away: getTeam('G', 2), label: '2D vs 2G' },
-    { id: 79, home: getTeam('B', 1), away: getThirdTeam('1B'), label: '1B vs 3 E/F/G/I/J' },
-    { id: 80, home: getTeam('F', 1), away: getTeam('C', 2), label: '1F vs 2C' },
-    { id: 86, home: getTeam('H', 1), away: getTeam('J', 2), label: '1H vs 2J' },
-    { id: 88, home: getTeam('J', 1), away: getTeam('H', 2), label: '1J vs 2H' },
-    { id: 85, home: getTeam('D', 1), away: getThirdTeam('1D'), label: '1D vs 3 B/E/F/I/J' },
-    { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K' },
+    { id: 73, home: getTeam('A', 2), away: getTeam('B', 2), label: '2A vs 2B', date: '28 Jun 2:00 p.m.', stadium: 'SoFi Stadium, Los Ángeles' },
+    { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F', date: '29 Jun 8:00 p.m.', stadium: 'NRG Stadium, Houston' },
+    { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I', date: '30 Jun 8:00 p.m.', stadium: 'Estadio Azteca, CDMX' },
+    { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J', date: '1 Jul 8:00 p.m.', stadium: 'Lumen Field, Seattle' },
+    { id: 83, home: getTeam('K', 1), away: getThirdTeam('1K'), label: '1K vs 3 D/E/I/J/L', date: '3 Jul 4:00 p.m.', stadium: 'Arrowhead, Kansas City' },
+    { id: 84, home: getTeam('K', 2), away: getTeam('L', 2), label: '2K vs 2L', date: '2 Jul 12:00 p.m.', stadium: 'BMO Field, Toronto' },
+    { id: 81, home: getTeam('I', 1), away: getThirdTeam('1I'), label: '1I vs 3 C/D/F/G/H', date: '30 Jun 12:00 p.m.', stadium: 'MetLife Stadium, NY/NJ' },
+    { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I', date: '30 Jun 4:00 p.m.', stadium: 'AT&T Stadium, Dallas' },
+    { id: 76, home: getTeam('E', 1), away: getThirdTeam('1E'), label: '1E vs 3 A/B/C/D/F', date: '29 Jun 12:30 p.m.', stadium: 'Gillette Stadium, Boston' },
+    { id: 78, home: getTeam('D', 2), away: getTeam('G', 2), label: '2D vs 2G', date: '3 Jul 8:00 p.m.', stadium: 'AT&T Stadium, Dallas' },
+    { id: 79, home: getTeam('B', 1), away: getThirdTeam('1B'), label: '1B vs 3 E/F/G/I/J', date: '2 Jul 8:00 p.m.', stadium: 'BC Place, Vancouver' },
+    { id: 80, home: getTeam('F', 1), away: getTeam('C', 2), label: '1F vs 2C', date: '29 Jun 4:00 p.m.', stadium: 'Estadio BBVA, Monterrey' },
+    { id: 86, home: getTeam('H', 1), away: getTeam('J', 2), label: '1H vs 2J', date: '2 Jul 4:00 p.m.', stadium: 'SoFi Stadium, Los Ángeles' },
+    { id: 88, home: getTeam('J', 1), away: getTeam('H', 2), label: '1J vs 2H', date: '3 Jul 12:00 p.m.', stadium: 'Hard Rock Stadium, Miami' },
+    { id: 85, home: getTeam('D', 1), away: getThirdTeam('1D'), label: '1D vs 3 B/E/F/I/J', date: '1 Jul 4:00 p.m.', stadium: "Levi's Stadium, SF" },
+    { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K', date: '1 Jul 12:00 p.m.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
   ];
 
   return matchups;
