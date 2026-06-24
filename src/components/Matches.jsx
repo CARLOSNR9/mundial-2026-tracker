@@ -38,8 +38,13 @@ const Matches = () => {
 
   const startEditing = (match) => {
     setEditingMatchId(match.id);
-    setEditScoreHome(match.scoreHome ?? '');
-    setEditScoreAway(match.scoreAway ?? '');
+    if (isMatchLive(match) && (match.scoreHome === undefined || match.scoreHome === null)) {
+      setEditScoreHome(0);
+      setEditScoreAway(0);
+    } else {
+      setEditScoreHome(match.scoreHome ?? '');
+      setEditScoreAway(match.scoreAway ?? '');
+    }
   };
 
   const handleSave = (matchId) => {
@@ -90,16 +95,20 @@ const Matches = () => {
                 {editingMatchId === match.id ? (
                   <input 
                     type="number" 
+                    min="0"
                     value={editScoreHome} 
-                    onChange={e => setEditScoreHome(e.target.value)} 
+                    onChange={e => {
+                      const val = e.target.value;
+                      if (val === '' || parseInt(val) >= 0) setEditScoreHome(val);
+                    }} 
                     style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
                     autoFocus
                     onClick={e => e.stopPropagation()}
                   />
                 ) : (
-                  match.status === 'finished' && (
+                  (match.status === 'finished' || isMatchLive(match)) && (
                     <div className={`team-score ${match.scoreHome > match.scoreAway ? 'winner' : ''}`}>
-                      {match.scoreHome}
+                      {match.scoreHome ?? 0}
                     </div>
                   )
                 )}
@@ -113,15 +122,19 @@ const Matches = () => {
                 {editingMatchId === match.id ? (
                   <input 
                     type="number" 
+                    min="0"
                     value={editScoreAway} 
-                    onChange={e => setEditScoreAway(e.target.value)} 
+                    onChange={e => {
+                      const val = e.target.value;
+                      if (val === '' || parseInt(val) >= 0) setEditScoreAway(val);
+                    }} 
                     style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
                     onClick={e => e.stopPropagation()}
                   />
                 ) : (
-                  match.status === 'finished' && (
+                  (match.status === 'finished' || isMatchLive(match)) && (
                     <div className={`team-score ${match.scoreAway > match.scoreHome ? 'winner' : ''}`}>
-                      {match.scoreAway}
+                      {match.scoreAway ?? 0}
                     </div>
                   )
                 )}
@@ -142,6 +155,10 @@ const Matches = () => {
                 >
                   Cancelar
                 </button>
+              </div>
+            ) : (isMatchLive(match) && match.status !== 'finished') ? (
+              <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
+                Toca para editar
               </div>
             ) : match.status === 'upcoming' ? (
               <div style={{ textAlign: 'center', marginTop: '10px', color: 'var(--primary)', fontSize: '0.85em', opacity: 0.8 }}>
