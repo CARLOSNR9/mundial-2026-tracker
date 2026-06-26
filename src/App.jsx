@@ -3,6 +3,7 @@ import Standings from './components/Standings';
 import Matches from './components/Matches';
 import TopScorers from './components/TopScorers';
 import BracketSimulator from './components/BracketSimulator';
+import GeneralTable from './components/GeneralTable';
 import { DataProvider } from './context/DataContext';
 
 import logo from './assets/logo2026.png';
@@ -16,6 +17,7 @@ const App = () => {
       case 'matches': return <Matches />;
       case 'scorers': return <TopScorers />;
       case 'bracket': return <BracketSimulator />;
+      case 'general': return <GeneralTable />;
       default: return <Standings />;
     }
   };
@@ -45,6 +47,12 @@ const App = () => {
         onClick={() => setActiveTab('scorers')}
       >
         <span>👟</span> Goleadores
+      </button>
+      <button 
+        className={`nav-btn ${activeTab === 'general' ? 'active' : ''}`}
+        onClick={() => setActiveTab('general')}
+      >
+        <span>🌍</span> Tabla Gen.
       </button>
     </nav>
   );
