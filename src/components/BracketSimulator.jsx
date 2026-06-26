@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const BracketSimulator = () => {
-  const { bracket16 } = useContext(DataContext);
+  const { bracket16, standings } = useContext(DataContext);
 
   if (!bracket16 || bracket16.length === 0) {
     return <div style={{ textAlign: 'center', padding: '20px' }}>Calculando 16avos de final...</div>;
