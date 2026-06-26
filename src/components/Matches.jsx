@@ -22,8 +22,8 @@ const Matches = () => {
     const diffMs = now - matchStart;
     const diffMins = diffMs / 60000;
     
-    // Consider it live if current time is between start and +120 minutes
-    return diffMins >= 0 && diffMins <= 120;
+    // Consider it live if current time is between start and +135 minutes (2 hours and 15 mins)
+    return diffMins >= 0 && diffMins <= 135;
   };
 
   const filteredMatches = matches.filter(match => {
