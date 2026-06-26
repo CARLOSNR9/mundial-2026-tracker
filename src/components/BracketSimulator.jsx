@@ -16,10 +16,20 @@ const BracketSimulator = () => {
     return standings[groupLetter].every(t => t.p === 3);
   };
 
+  const isAllFinished = Object.keys(standings).length === 12 && 
+                        Object.keys(standings).every(g => isGroupFinished(g));
+
   const MatchNode = ({ match }) => {
+    const involvesThird = match.label.includes('3');
+    
+    // Un partido es fijo si:
+    // 1. Ambos equipos están definidos
+    // 2. Sus grupos ya terminaron
+    // 3. Si involucra a un 3ro, TODOS los grupos del mundial deben haber terminado
     const isFixed = match.home?.id && match.away?.id && 
                     isGroupFinished(match.home.group) && 
-                    isGroupFinished(match.away.group);
+                    isGroupFinished(match.away.group) &&
+                    (!involvesThird || isAllFinished);
 
     return (
       <div className="glass bracket-match" style={{ 
