@@ -11,26 +11,49 @@ const BracketSimulator = () => {
   const leftSide = bracket16.slice(0, 8);
   const rightSide = bracket16.slice(8, 16);
 
-  const MatchNode = ({ match }) => (
-    <div className="glass bracket-match">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-        <span style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
-        <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textAlign: 'right' }}>{match.date.toUpperCase()}</span>
-      </div>
-      <div className="team-row" style={{ marginBottom: '8px' }}>
-        <div className="team-info" style={{ fontSize: '1rem' }}>
-          <span className="flag" style={{ fontSize: '1.2rem' }}>{match.home.flag}</span>
-          <span>{match.home.name}</span>
+  const isGroupFinished = (groupLetter) => {
+    if (!groupLetter || !standings[groupLetter]) return false;
+    return standings[groupLetter].every(t => t.p === 3);
+  };
+
+  const MatchNode = ({ match }) => {
+    const isFixed = match.home?.id && match.away?.id && 
+                    isGroupFinished(match.home.group) && 
+                    isGroupFinished(match.away.group);
+
+    return (
+      <div className="glass bracket-match" style={{ 
+        padding: '10px',
+        border: isFixed ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)',
+        boxShadow: isFixed ? '0 0 10px rgba(0, 255, 136, 0.2)' : 'none'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
+            {isFixed && <span style={{ fontSize: '0.55rem', backgroundColor: 'var(--primary)', color: 'var(--bg-color)', padding: '2px 4px', borderRadius: '4px', fontWeight: 'bold' }}>FIJO</span>}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{match.date.toUpperCase()}</span>
+            {match.stadium && (
+              <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{match.stadium.toUpperCase()}</span>
+            )}
+          </div>
+        </div>
+        <div className="team-row" style={{ marginBottom: '8px' }}>
+          <div className="team-info" style={{ fontSize: '1rem', opacity: match.home?.id ? 1 : 0.5 }}>
+            <span className="flag" style={{ fontSize: '1.2rem' }}>{match.home?.flag || '❓'}</span>
+            <span>{match.home?.name || 'TBD'}</span>
+          </div>
+        </div>
+        <div className="team-row">
+          <div className="team-info" style={{ fontSize: '1rem', opacity: match.away?.id ? 1 : 0.5 }}>
+            <span className="flag" style={{ fontSize: '1.2rem' }}>{match.away?.flag || '❓'}</span>
+            <span>{match.away?.name || 'TBD'}</span>
+          </div>
         </div>
       </div>
-      <div className="team-row">
-        <div className="team-info" style={{ fontSize: '1rem' }}>
-          <span className="flag" style={{ fontSize: '1.2rem' }}>{match.away.flag}</span>
-          <span>{match.away.name}</span>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="animate-fade-in">
