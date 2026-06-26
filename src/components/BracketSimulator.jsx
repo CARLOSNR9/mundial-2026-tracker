@@ -13,7 +13,10 @@ const BracketSimulator = () => {
 
   const MatchNode = ({ match }) => (
     <div className="glass bracket-match">
-      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{match.label}</div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <span style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>{match.label}</span>
+        <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textAlign: 'right' }}>{match.date.toUpperCase()}</span>
+      </div>
       <div className="team-row" style={{ marginBottom: '8px' }}>
         <div className="team-info" style={{ fontSize: '1rem' }}>
           <span className="flag" style={{ fontSize: '1.2rem' }}>{match.home.flag}</span>
