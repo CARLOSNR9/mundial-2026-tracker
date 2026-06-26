@@ -109,7 +109,9 @@ const TopScorers = () => {
               
               <div className="scorer-stats">
                 <div className="scorer-goals">{scorer.goals} Goles</div>
-                <div className="scorer-assists" style={{ display: 'none' }}>{scorer.assists} Asist.</div>
+                <div className="scorer-assists" style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  {scorer.assists > 0 ? `${scorer.assists} Asist.` : ''}
+                </div>
               </div>
             </div>
           ))}
