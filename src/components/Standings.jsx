@@ -256,7 +256,7 @@ const Standings = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedThirdPlaces.slice(0, 10).map((row, index) => {
+            {sortedThirdPlaces.map((row, index) => {
               const isQualified = index < 8;
               let borderColor = isQualified ? 'var(--warning)' : 'var(--danger)';
 
