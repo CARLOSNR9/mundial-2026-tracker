@@ -40,6 +40,46 @@ const Matches = () => {
     filteredMatches = [...filteredMatches, ...formattedBracket16];
   }
 
+  const groupedMatches = filteredMatches.reduce((acc, match) => {
+    let stageName = 'Fase de Grupos';
+    if (match.stage) {
+      const stageLower = match.stage.toLowerCase();
+      if (stageLower.includes('16avos') || stageLower.includes('dieciseisavos')) {
+        stageName = 'Dieciseisavos de Final';
+      } else if (stageLower.includes('octavos')) {
+        stageName = 'Octavos de Final';
+      } else if (stageLower.includes('cuartos')) {
+        stageName = 'Cuartos de Final';
+      } else if (stageLower.includes('semifinal')) {
+        stageName = 'Semifinales';
+      } else if (stageLower.includes('final')) {
+        stageName = 'Final';
+      } else {
+        stageName = match.stage;
+      }
+    }
+
+    if (!acc[stageName]) acc[stageName] = [];
+    acc[stageName].push(match);
+    return acc;
+  }, {});
+
+  const stageOrder = [
+    'Fase de Grupos', 
+    'Dieciseisavos de Final', 
+    'Octavos de Final', 
+    'Cuartos de Final', 
+    'Semifinales', 
+    'Tercer Puesto', 
+    'Final'
+  ];
+
+  const sortedStages = Object.keys(groupedMatches).sort((a, b) => {
+    const indexA = stageOrder.indexOf(a) !== -1 ? stageOrder.indexOf(a) : 99;
+    const indexB = stageOrder.indexOf(b) !== -1 ? stageOrder.indexOf(b) : 99;
+    return indexA - indexB;
+  });
+
   const formatDate = (dateString) => {
     const d = new Date(dateString);
     if (isNaN(d.getTime())) return dateString;
@@ -77,109 +117,126 @@ const Matches = () => {
         </button>
       </div>
 
-      <div className="card-grid">
-        {filteredMatches.map(match => (
-          <div 
-            key={match.id} 
-            className="glass match-card" 
-            onClick={() => { if (editingMatchId !== match.id) startEditing(match); }}
-            style={{ cursor: 'pointer', position: 'relative', transition: 'all 0.3s ease' }}
-          >
-            <div className="match-header">
-              <span>{match.group ? `Grupo ${match.group}` : match.stage}</span>
-              {isMatchLive(match) ? (
-                <span className="live-badge">
-                  <div className="live-dot"></div>
-                  EN VIVO
-                </span>
-              ) : (
-                <span>{formatDate(match.date)}</span>
-              )}
-            </div>
-            
-            <div className="match-teams">
-              <div className="team-row">
-                <div className="team-info">
-                  <span className="flag">{match.home.flag}</span>
-                  <span>{match.home.name}</span>
-                </div>
-                {editingMatchId === match.id ? (
-                  <input 
-                    type="number" 
-                    min="0"
-                    value={editScoreHome} 
-                    onChange={e => {
-                      const val = e.target.value;
-                      if (val === '' || parseInt(val) >= 0) setEditScoreHome(val);
-                    }} 
-                    style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
-                    autoFocus
-                    onClick={e => e.stopPropagation()}
-                  />
-                ) : (
-                  (match.status === 'finished' || isMatchLive(match)) && (
-                    <div className={`team-score ${match.scoreHome > match.scoreAway ? 'winner' : ''}`}>
-                      {match.scoreHome ?? 0}
+      <div>
+        {sortedStages.map(stageName => (
+          <div key={stageName} style={{ marginBottom: '40px' }}>
+            <h3 style={{ 
+              color: 'var(--primary)', 
+              marginBottom: '20px', 
+              textAlign: 'center', 
+              textTransform: 'uppercase', 
+              letterSpacing: '2px', 
+              borderBottom: '1px solid rgba(255,255,255,0.1)', 
+              paddingBottom: '10px' 
+            }}>
+              {stageName}
+            </h3>
+            <div className="card-grid">
+              {groupedMatches[stageName].map(match => (
+                <div 
+                  key={match.id} 
+                  className="glass match-card" 
+                  onClick={() => { if (editingMatchId !== match.id) startEditing(match); }}
+                  style={{ cursor: 'pointer', position: 'relative', transition: 'all 0.3s ease' }}
+                >
+                  <div className="match-header">
+                    <span>{match.group ? `Grupo ${match.group}` : match.stage}</span>
+                    {isMatchLive(match) ? (
+                      <span className="live-badge">
+                        <div className="live-dot"></div>
+                        EN VIVO
+                      </span>
+                    ) : (
+                      <span>{formatDate(match.date)}</span>
+                    )}
+                  </div>
+                  
+                  <div className="match-teams">
+                    <div className="team-row">
+                      <div className="team-info">
+                        <span className="flag">{match.home.flag}</span>
+                        <span>{match.home.name}</span>
+                      </div>
+                      {editingMatchId === match.id ? (
+                        <input 
+                          type="number" 
+                          min="0"
+                          value={editScoreHome} 
+                          onChange={e => {
+                            const val = e.target.value;
+                            if (val === '' || parseInt(val) >= 0) setEditScoreHome(val);
+                          }} 
+                          style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
+                          autoFocus
+                          onClick={e => e.stopPropagation()}
+                        />
+                      ) : (
+                        (match.status === 'finished' || isMatchLive(match)) && (
+                          <div className={`team-score ${match.scoreHome > match.scoreAway ? 'winner' : ''}`}>
+                            {match.scoreHome ?? 0}
+                          </div>
+                        )
+                      )}
                     </div>
-                  )
-                )}
-              </div>
-              
-              <div className="team-row">
-                <div className="team-info">
-                  <span className="flag">{match.away.flag}</span>
-                  <span>{match.away.name}</span>
-                </div>
-                {editingMatchId === match.id ? (
-                  <input 
-                    type="number" 
-                    min="0"
-                    value={editScoreAway} 
-                    onChange={e => {
-                      const val = e.target.value;
-                      if (val === '' || parseInt(val) >= 0) setEditScoreAway(val);
-                    }} 
-                    style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
-                    onClick={e => e.stopPropagation()}
-                  />
-                ) : (
-                  (match.status === 'finished' || isMatchLive(match)) && (
-                    <div className={`team-score ${match.scoreAway > match.scoreHome ? 'winner' : ''}`}>
-                      {match.scoreAway ?? 0}
+                    
+                    <div className="team-row">
+                      <div className="team-info">
+                        <span className="flag">{match.away.flag}</span>
+                        <span>{match.away.name}</span>
+                      </div>
+                      {editingMatchId === match.id ? (
+                        <input 
+                          type="number" 
+                          min="0"
+                          value={editScoreAway} 
+                          onChange={e => {
+                            const val = e.target.value;
+                            if (val === '' || parseInt(val) >= 0) setEditScoreAway(val);
+                          }} 
+                          style={{ width: '45px', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid var(--primary)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
+                          onClick={e => e.stopPropagation()}
+                        />
+                      ) : (
+                        (match.status === 'finished' || isMatchLive(match)) && (
+                          <div className={`team-score ${match.scoreAway > match.scoreHome ? 'winner' : ''}`}>
+                            {match.scoreAway ?? 0}
+                          </div>
+                        )
+                      )}
                     </div>
-                  )
-                )}
-              </div>
-            </div>
+                  </div>
 
-            {editingMatchId === match.id ? (
-              <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); handleSave(match.id); }}
-                  style={{ background: 'var(--primary)', color: 'var(--bg-color)', border: 'none', padding: '8px 20px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-                >
-                  Guardar
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setEditingMatchId(null); }}
-                  style={{ background: 'transparent', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.2)', padding: '8px 15px', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
-                >
-                  Cancelar
-                </button>
-              </div>
-            ) : (isMatchLive(match) && match.status !== 'finished') ? (
-              <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
-                Toca para editar
-              </div>
-            ) : match.status === 'upcoming' ? (
-              <div style={{ textAlign: 'center', marginTop: '10px', color: 'var(--primary)', fontSize: '0.85em', opacity: 0.8 }}>
-                Toca para simular
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
-                Toca para editar
-              </div>
-            )}
+                  {editingMatchId === match.id ? (
+                    <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); handleSave(match.id); }}
+                        style={{ background: 'var(--primary)', color: 'var(--bg-color)', border: 'none', padding: '8px 20px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                      >
+                        Guardar
+                      </button>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setEditingMatchId(null); }}
+                        style={{ background: 'transparent', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.2)', padding: '8px 15px', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  ) : (isMatchLive(match) && match.status !== 'finished') ? (
+                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
+                      Toca para editar
+                    </div>
+                  ) : match.status === 'upcoming' ? (
+                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'var(--primary)', fontSize: '0.85em', opacity: 0.8 }}>
+                      Toca para simular
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
+                      Toca para editar
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
