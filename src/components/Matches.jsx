@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Matches = () => {
-  const { matches, updateMatch } = useContext(DataContext);
+  const { matches, updateMatch, bracket16 } = useContext(DataContext);
   const [filter, setFilter] = useState('all'); // all, finished, upcoming
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
@@ -26,14 +26,25 @@ const Matches = () => {
     return diffMins >= 0 && diffMins <= 135;
   };
 
-  const filteredMatches = matches.filter(match => {
+  let filteredMatches = matches.filter(match => {
     if (filter === 'all') return true;
     return match.status === filter;
   });
 
+  if (filter === 'upcoming' || filter === 'all') {
+    const formattedBracket16 = (bracket16 || []).map(m => ({
+      ...m,
+      stage: '16avos - ' + m.label,
+      status: 'upcoming'
+    }));
+    filteredMatches = [...filteredMatches, ...formattedBracket16];
+  }
+
   const formatDate = (dateString) => {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
     const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    return new Date(dateString).toLocaleDateString('es-ES', options);
+    return d.toLocaleDateString('es-ES', options);
   };
 
   const startEditing = (match) => {
