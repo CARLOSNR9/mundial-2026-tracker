@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DailyDashboard from './components/DailyDashboard';
 import Standings from './components/Standings';
 import Matches from './components/Matches';
 import TopScorers from './components/TopScorers';
@@ -9,26 +10,39 @@ import { DataProvider } from './context/DataContext';
 import logo from './assets/logo2026.png';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('standings');
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'dashboard': return <DailyDashboard />;
       case 'standings': return <Standings />;
       case 'matches': return <Matches />;
       case 'scorers': return <TopScorers />;
       case 'bracket': return <BracketSimulator />;
       case 'general': return <GeneralTable />;
-      default: return <Standings />;
+      default: return <DailyDashboard />;
     }
   };
 
   const NavigationMenu = ({ isBottom }) => (
     <nav className={`main-nav ${isBottom ? 'hide-on-mobile' : ''}`} style={isBottom ? { marginTop: '20px', marginBottom: '0' } : {}}>
       <button 
+        className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+        onClick={() => setActiveTab('dashboard')}
+      >
+        <span>🔥</span> Hoy
+      </button>
+      <button 
+        className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
+        onClick={() => setActiveTab('bracket')}
+      >
+        <span>🏆</span> Cuadro
+      </button>
+      <button 
         className={`nav-btn ${activeTab === 'standings' ? 'active' : ''}`}
         onClick={() => setActiveTab('standings')}
       >
-        <span>📊</span> Posiciones
+        <span>📊</span> Grupos
       </button>
       <button 
         className={`nav-btn ${activeTab === 'matches' ? 'active' : ''}`}
@@ -37,22 +51,10 @@ const App = () => {
         <span>⚽</span> Partidos
       </button>
       <button 
-        className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
-        onClick={() => setActiveTab('bracket')}
-      >
-        <span>🏆</span> 16avos
-      </button>
-      <button 
         className={`nav-btn ${activeTab === 'scorers' ? 'active' : ''}`}
         onClick={() => setActiveTab('scorers')}
       >
         <span>👟</span> Goleadores
-      </button>
-      <button 
-        className={`nav-btn ${activeTab === 'general' ? 'active' : ''}`}
-        onClick={() => setActiveTab('general')}
-      >
-        <span>🌍</span> Tabla Gen.
       </button>
     </nav>
   );
