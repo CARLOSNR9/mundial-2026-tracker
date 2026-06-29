@@ -121,48 +121,27 @@ const allocateThirdPlaces = (qualifiedThirds) => {
   return finalAssignment;
 };
 
-const calculateBracket16 = (standings) => {
-  const allThirdPlaces = Object.values(standings).map(group => group[2]).filter(Boolean);
-  
-  const bestThirds = [...allThirdPlaces].sort((a, b) => {
-    if (b.pts !== a.pts) return b.pts - a.pts;
-    if (b.gd !== a.gd) return b.gd - a.gd;
-    if (b.gf !== a.gf) return b.gf - a.gf;
-    return (a.team.name || '').localeCompare(b.team.name || '');
-  }).slice(0, 8);
-
-  const thirdAssignments = allocateThirdPlaces(bestThirds);
-
-  const getTeam = (group, pos) => {
-    if (!standings[group] || !standings[group][pos - 1] || !standings[group][pos - 1].team) return { name: `TBD ${pos}${group}`, flag: '❓' };
-    return standings[group][pos - 1].team;
-  };
-
-  const getThirdTeam = (slot) => {
-    if (thirdAssignments[slot] && thirdAssignments[slot].team) return thirdAssignments[slot].team;
-    return { name: `TBD 3rd`, flag: '❓' };
-  };
-
+const calculateBracket16 = () => {
   const matchups = [
     // Lado Izquierdo
-    { id: 76, home: getTeam('E', 1), away: getThirdTeam('1E'), label: '1E vs 3 A/B/C/D/F', date: 'Lun 29 Jun 15:30 hrs.', stadium: 'Gillette Stadium, Boston' },
-    { id: 81, home: getTeam('I', 1), away: getThirdTeam('1I'), label: '1I vs 3 C/D/F/G/H', date: 'Mar 30 Jun 16:00 hrs.', stadium: 'MetLife Stadium, NY/NJ' },
-    { id: 73, home: getTeam('A', 2), away: getTeam('B', 2), label: '2A vs 2B', date: 'Dom 28 Jun 14:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
-    { id: 80, home: getTeam('F', 1), away: getTeam('C', 2), label: '1F vs 2C', date: 'Lun 29 Jun 20:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
-    { id: 84, home: getTeam('K', 2), away: getTeam('L', 2), label: '2K vs 2L', date: 'Jue 2 Jul 18:00 hrs.', stadium: 'BMO Field, Toronto' },
-    { id: 86, home: getTeam('H', 1), away: getTeam('J', 2), label: '1H vs 2J', date: 'Jue 2 Jul 14:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
-    { id: 85, home: getTeam('D', 1), away: getThirdTeam('1D'), label: '1D vs 3 B/E/F/I/J', date: 'Mié 1 Jul 19:00 hrs.', stadium: "Levi's Stadium, SF" },
-    { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J', date: 'Mié 1 Jul 15:00 hrs.', stadium: 'Lumen Field, Seattle' },
+    { id: 76, home: teams.germany, away: teams.paraguay, label: '16avos 1', date: 'Lun 29 Jun 15:30 hrs.', stadium: 'Gillette Stadium, Boston/Foxborough' },
+    { id: 81, home: teams.france, away: teams.sweden, label: '16avos 2', date: 'Mar 30 Jun 16:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
+    { id: 73, home: teams.south_africa, away: teams.canada, label: '16avos 3', date: 'Dom 28 Jun 14:00 hrs.', stadium: 'BMO Field, Toronto' },
+    { id: 80, home: teams.netherlands, away: teams.morocco, label: '16avos 4', date: 'Lun 29 Jun 20:00 hrs.', stadium: 'BC Place, Vancouver' },
+    { id: 84, home: teams.switzerland, away: teams.algeria, label: '16avos 5', date: 'Jue 2 Jul 22:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
+    { id: 86, home: teams.spain, away: teams.austria, label: '16avos 6', date: 'Jue 2 Jul 14:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
+    { id: 85, home: teams.usa, away: teams.bosnia, label: '16avos 7', date: 'Mié 1 Jul 19:00 hrs.', stadium: 'Lumen Field, Seattle' },
+    { id: 77, home: teams.belgium, away: teams.senegal, label: '16avos 8', date: 'Mié 1 Jul 15:00 hrs.', stadium: 'NRG Stadium, Houston' },
     
     // Lado Derecho
-    { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F', date: 'Lun 29 Jun 12:00 hrs.', stadium: 'NRG Stadium, Houston' },
-    { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I', date: 'Mar 30 Jun 12:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
-    { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I', date: 'Mar 30 Jun 20:00 hrs.', stadium: 'Estadio Azteca, CDMX' },
-    { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K', date: 'Mié 1 Jul 11:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
-    { id: 88, home: getTeam('J', 1), away: getTeam('H', 2), label: '1J vs 2H', date: 'Vie 3 Jul 17:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
-    { id: 78, home: getTeam('D', 2), away: getTeam('G', 2), label: '2D vs 2G', date: 'Vie 3 Jul 13:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
-    { id: 79, home: getTeam('B', 1), away: getThirdTeam('1B'), label: '1B vs 3 E/F/G/I/J', date: 'Jue 2 Jul 22:00 hrs.', stadium: 'BC Place, Vancouver' },
-    { id: 83, home: getTeam('K', 1), away: getThirdTeam('1K'), label: '1K vs 3 D/E/I/J/L', date: 'Vie 3 Jul 20:30 hrs.', stadium: 'Arrowhead, Kansas City' },
+    { id: 75, home: teams.brazil, away: teams.japan, label: '16avos 9', date: 'Lun 29 Jun 12:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
+    { id: 82, home: teams.ivory_coast, away: teams.norway, label: '16avos 10', date: 'Mar 30 Jun 12:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
+    { id: 74, home: teams.mexico, away: teams.ecuador, label: '16avos 11', date: 'Mar 30 Jun 20:00 hrs.', stadium: 'Estadio Akron, Guadalajara' },
+    { id: 87, home: teams.england, away: teams.dr_congo, label: '16avos 12', date: 'Mié 1 Jul 11:00 hrs.', stadium: 'Lincoln Financial Field, Filadelfia' },
+    { id: 88, home: teams.argentina, away: teams.cape_verde, label: '16avos 13', date: 'Vie 3 Jul 17:00 hrs.', stadium: 'NRG Stadium, Houston' },
+    { id: 78, home: teams.australia, away: teams.egypt, label: '16avos 14', date: 'Vie 3 Jul 13:00 hrs.', stadium: 'Arrowhead, Kansas City' },
+    { id: 79, home: teams.portugal, away: teams.croatia, label: '16avos 15', date: 'Jue 2 Jul 18:00 hrs.', stadium: 'Levi\'s Stadium, Santa Clara' },
+    { id: 83, home: teams.colombia, away: teams.ghana, label: '16avos 16', date: 'Vie 3 Jul 20:30 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
   ];
 
   return matchups;
