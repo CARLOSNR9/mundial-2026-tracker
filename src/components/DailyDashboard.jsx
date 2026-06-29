@@ -21,6 +21,17 @@ const DailyDashboard = () => {
 
   // Get next opponent logic based on bracket array index
   // 0-1, 2-3, 4-5, 6-7, 8-9, 10-11, 12-13, 14-15
+  const octavosDetails = {
+    0: { date: "Sáb 4 Jul 11:00 hrs", stadium: "Lincoln Financial Field, Filadelfia" },
+    1: { date: "Sáb 4 Jul 19:30 hrs", stadium: "NRG Stadium, Houston" },
+    2: { date: "Dom 5 Jul 15:00 hrs", stadium: "MetLife Stadium, Nueva Jersey" },
+    3: { date: "Dom 5 Jul 19:00 hrs", stadium: "Estadio Azteca, CDMX" },
+    4: { date: "Lun 6 Jul 16:00 hrs", stadium: "AT&T Stadium, Dallas" },
+    5: { date: "Lun 6 Jul 20:00 hrs", stadium: "Lumen Field, Seattle" },
+    6: { date: "Mar 7 Jul 12:00 hrs", stadium: "Mercedes-Benz Stadium, Atlanta" },
+    7: { date: "Mar 7 Jul 18:30 hrs", stadium: "BC Place, Vancouver" }
+  };
+
   const getNextOpponentText = (matchId) => {
     const idx = bracket16.findIndex(m => m.id === matchId);
     if (idx === -1) return '';
@@ -29,6 +40,8 @@ const DailyDashboard = () => {
     const isEven = idx % 2 === 0;
     const partnerIdx = isEven ? idx + 1 : idx - 1;
     const partnerMatch = bracket16[partnerIdx];
+    const octavosIdx = Math.floor(idx / 2);
+    const octavosInfo = octavosDetails[octavosIdx];
     
     if (!partnerMatch) return '';
 
@@ -42,13 +55,13 @@ const DailyDashboard = () => {
       } else if (awayScore > homeScore) {
         partnerText = partnerMatch.away.name;
       } else {
-        partnerText = `Ganador de ${partnerMatch.home.name}/${partnerMatch.away.name} (Penales)`;
+        partnerText = `el ganador de ${partnerMatch.home.name} vs ${partnerMatch.away.name}`;
       }
     } else {
-      partnerText = `Ganador de ${partnerMatch.home.name} vs ${partnerMatch.away.name}`;
+      partnerText = `el ganador entre ${partnerMatch.home.name} y ${partnerMatch.away.name}`;
     }
 
-    return `En Octavos de Final, el ganador enfrentará a: ${partnerText}`;
+    return `Después, el ganador de este partido se estará enfrentando a ${partnerText}, el ${octavosInfo.date} en el ${octavosInfo.stadium}.`;
   };
 
   // Helper to get month index
@@ -121,8 +134,8 @@ const DailyDashboard = () => {
     if (match.status === 'finished') return false;
     const matchStart = getMatchDateObj(match.date);
     const diffMins = (currentTime - matchStart) / 60000;
-    // Consider it live if current time is between start and +135 minutes (2 hours and 15 mins)
-    return diffMins >= 0 && diffMins <= 135;
+    // Consider it live if current time is between start and +150 minutes (2 hours and 30 mins)
+    return diffMins >= 0 && diffMins <= 150;
   };
 
   const startEditing = (match) => {
@@ -149,13 +162,16 @@ const DailyDashboard = () => {
           const curiosity = matchCuriosities[match.id] || "No hay datos curiosos disponibles para este partido.";
 
           return (
-            <div key={match.id} className={`glass match-card ${live ? 'live-match-card' : ''}`} style={{
-              padding: '20px',
-              border: live ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)',
-              boxShadow: live ? '0 0 20px rgba(0, 255, 136, 0.3)' : 'none',
-              transform: live ? 'scale(1.02)' : 'none',
-              transition: 'all 0.3s ease'
-            }}>
+            <div key={match.id} className={`glass match-card ${live ? 'live-match-card' : ''}`} 
+              onDoubleClick={() => { if (live || match.status === 'finished') startEditing(match); }}
+              style={{
+                padding: '20px',
+                border: live ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)',
+                boxShadow: live ? '0 0 20px rgba(0, 255, 136, 0.3)' : 'none',
+                transform: live ? 'scale(1.02)' : 'none',
+                transition: 'all 0.3s ease',
+                cursor: (live || match.status === 'finished') ? 'pointer' : 'default'
+              }}>
               
               <div className="match-header" style={{ marginBottom: '15px', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>{match.label} - {match.stadium}</span>
