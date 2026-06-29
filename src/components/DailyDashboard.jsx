@@ -51,50 +51,78 @@ const DailyDashboard = () => {
     return `En Octavos de Final, el ganador enfrentará a: ${partnerText}`;
   };
 
-  // Helper to extract day string from "Lun 29 Jun 14:30 hrs."
-  const getDayString = (dateStr) => {
+  // Helper to get month index
+  const monthMap = { "Ene": 0, "Feb": 1, "Mar": 2, "Abr": 3, "May": 4, "Jun": 5, "Jul": 6, "Ago": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dic": 11 };
+
+  // Parse custom date string to Date object
+  const getMatchDateObj = (dateStr) => {
+    // Expected format: "Lun 29 Jun 14:30 hrs."
+    const parts = dateStr.split(' ');
+    if (parts.length >= 4) {
+      const day = parseInt(parts[1]);
+      const month = monthMap[parts[2]];
+      const timeParts = parts[3].split(':');
+      const hour = parseInt(timeParts[0]);
+      const min = parseInt(timeParts[1]);
+      return new Date(2026, month, day, hour, min);
+    }
+    return new Date(); // fallback
+  };
+
+  // Helper to extract day string like "29 Jun"
+  const getDayMonthString = (dateStr) => {
     const parts = dateStr.split(' ');
     if (parts.length >= 3) {
-      return `${parts[0]} ${parts[1]} ${parts[2]}`;
+      return `${parts[1]} ${parts[2]}`;
     }
     return dateStr;
   };
 
+  // Determine current day string
+  const currentDay = currentTime.getDate();
+  const currentMonthIdx = currentTime.getMonth();
+  const monthsArr = Object.keys(monthMap);
+  const todayStr = `${currentDay} ${monthsArr[currentMonthIdx]}`; // e.g. "29 Jun"
+
   // Group matches by day
   const matchesByDay = bracket16.reduce((acc, match) => {
-    const day = getDayString(match.date);
+    const day = getDayMonthString(match.date);
     if (!acc[day]) acc[day] = [];
     acc[day].push(match);
     return acc;
   }, {});
 
-  // For simulation/demo purposes, we will treat the "first day with an unfinished match" as "Today".
-  // If all are finished, we show the last day.
-  const daysInOrder = ["Dom 28 Jun", "Lun 29 Jun", "Mar 30 Jun", "Mié 1 Jul", "Jue 2 Jul", "Vie 3 Jul"];
-  
-  let todayString = daysInOrder[0];
-  for (let day of daysInOrder) {
-    const dayMatches = matchesByDay[day] || [];
-    if (dayMatches.some(m => m.status !== 'finished')) {
-      todayString = day;
-      break;
-    }
-  }
+  // Find all matches for "Today"
+  let todaysMatches = matchesByDay[todayStr] || [];
 
-  const todaysMatches = matchesByDay[todayString] || [];
-  
-  // Future matches
-  const todayIdx = daysInOrder.indexOf(todayString);
-  const futureDays = daysInOrder.slice(todayIdx + 1);
-  const upcomingMatches = futureDays.flatMap(day => matchesByDay[day] || []);
+  // Sort today's matches chronologically
+  todaysMatches.sort((a, b) => getMatchDateObj(a.date) - getMatchDateObj(b.date));
 
+  // Determine future matches (matches whose date is after today)
+  // We can do this by filtering bracket16
+  const upcomingMatches = bracket16.filter(match => {
+    const matchDayStr = getDayMonthString(match.date);
+    if (matchDayStr === todayStr) return false; // It's today
+    
+    // Check if it's strictly in the future (ignore past days)
+    // Compare start of day for both
+    const matchDateObj = getMatchDateObj(match.date);
+    const matchStartOfDay = new Date(matchDateObj.getFullYear(), matchDateObj.getMonth(), matchDateObj.getDate());
+    const currentStartOfDay = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate());
+    
+    return matchStartOfDay > currentStartOfDay;
+  });
+
+  // Sort upcoming matches chronologically
+  upcomingMatches.sort((a, b) => getMatchDateObj(a.date) - getMatchDateObj(b.date));
+
+  // Real "Live" logic
   const isMatchLive = (match) => {
-    // For a real app we compare against currentTime.
-    // For this demo, let's treat the FIRST upcoming match of "Today" as LIVE if it doesn't have a score.
-    // This makes the demo interactive.
     if (match.status === 'finished') return false;
-    const isFirstUnfinished = todaysMatches.find(m => m.status !== 'finished') === match;
-    return isFirstUnfinished;
+    const matchStart = getMatchDateObj(match.date);
+    const diffMins = (currentTime - matchStart) / 60000;
+    // Consider it live if current time is between start and +135 minutes (2 hours and 15 mins)
+    return diffMins >= 0 && diffMins <= 135;
   };
 
   const startEditing = (match) => {
@@ -112,7 +140,7 @@ const DailyDashboard = () => {
     <div className="animate-fade-in dashboard-container">
       <div style={{ textAlign: 'center', marginBottom: '30px' }}>
         <h2 style={{ color: 'var(--primary)', marginBottom: '5px' }}>Partidos de Hoy</h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', fontWeight: 'bold' }}>{todayString.toUpperCase()}</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', fontWeight: 'bold' }}>{todayStr.toUpperCase()}</p>
       </div>
 
       <div className="todays-matches" style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginBottom: '50px' }}>
