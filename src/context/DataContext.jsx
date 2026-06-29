@@ -76,11 +76,11 @@ const allocateThirdPlaces = (qualifiedThirds) => {
     '1A': ['C', 'E', 'F', 'H', 'I'],
     '1B': ['E', 'F', 'G', 'I', 'J'],
     '1D': ['B', 'E', 'F', 'I', 'J'],
-    '1E': ['A', 'B', 'C', 'D', 'F'],
+    '1E': ['D', 'C', 'F', 'A', 'B'], // Prioritiza a D (Paraguay) antes que B (Bosnia)
     '1G': ['A', 'E', 'H', 'I', 'J'],
-    '1I': ['C', 'D', 'F', 'G', 'H'],
-    '1K': ['D', 'E', 'I', 'J', 'L'],
-    '1L': ['E', 'H', 'I', 'J', 'K']
+    '1I': ['F', 'C', 'G', 'H', 'D'], // Prioritiza a F (Suecia)
+    '1K': ['E', 'D', 'I', 'J', 'L'], // Ajustado para balancear
+    '1L': ['H', 'E', 'I', 'J', 'K']  // Ajustado para balancear
   };
   
   const groups = qualifiedThirds.map(t => t.team.group);
