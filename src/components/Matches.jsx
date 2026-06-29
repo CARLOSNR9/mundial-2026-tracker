@@ -40,6 +40,25 @@ const Matches = () => {
     filteredMatches = [...filteredMatches, ...formattedBracket16];
   }
 
+  // Helper to get month index
+  const monthMap = { "Ene": 0, "Feb": 1, "Mar": 2, "Abr": 3, "May": 4, "Jun": 5, "Jul": 6, "Ago": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dic": 11 };
+
+  // Parse custom date string to Date object
+  const getMatchDateObj = (dateStr) => {
+    if (!dateStr) return new Date(0);
+    const parts = dateStr.split(' ');
+    if (parts.length >= 4 && monthMap[parts[2]] !== undefined) {
+      const day = parseInt(parts[1]);
+      const month = monthMap[parts[2]];
+      const timeParts = parts[3].split(':');
+      const hour = parseInt(timeParts[0]);
+      const min = parseInt(timeParts[1]);
+      return new Date(2026, month, day, hour, min);
+    }
+    const stdDate = new Date(dateStr);
+    return isNaN(stdDate.getTime()) ? new Date(0) : stdDate;
+  };
+
   const groupedMatches = filteredMatches.reduce((acc, match) => {
     let stageName = 'Fase de Grupos';
     if (match.stage) {
@@ -63,6 +82,11 @@ const Matches = () => {
     acc[stageName].push(match);
     return acc;
   }, {});
+
+  // Sort matches within each group chronologically
+  Object.keys(groupedMatches).forEach(stage => {
+    groupedMatches[stage].sort((a, b) => getMatchDateObj(a.date) - getMatchDateObj(b.date));
+  });
 
   const stageOrder = [
     'Fase de Grupos', 
