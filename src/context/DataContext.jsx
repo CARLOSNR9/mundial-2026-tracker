@@ -97,9 +97,9 @@ const allocateThirdPlaces = (qualifiedThirds) => {
     const currentSlot = slots[slotIndex];
     const allowedGroups = thirdPlaceSlots[currentSlot];
 
-    for (let i = 0; i < groups.length; i++) {
-      const g = groups[i];
-      if (!currentAssignment.used.has(g) && allowedGroups.includes(g)) {
+    for (let i = 0; i < allowedGroups.length; i++) {
+      const g = allowedGroups[i];
+      if (groups.includes(g) && !currentAssignment.used.has(g)) {
         currentAssignment.used.add(g);
         currentAssignment.mapping[currentSlot] = qualifiedThirds.find(t => t.team.group === g);
         backtrack(slotIndex + 1, currentAssignment);
