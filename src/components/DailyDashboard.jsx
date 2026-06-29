@@ -108,8 +108,12 @@ const DailyDashboard = () => {
   // Find all matches for "Today"
   let todaysMatches = matchesByDay[todayStr] || [];
 
-  // Filter out finished matches to prioritize live or upcoming matches
-  todaysMatches = todaysMatches.filter(match => match.status !== 'finished');
+  // Filter out matches that ended more than 150 mins ago (2.5 hours)
+  todaysMatches = todaysMatches.filter(match => {
+    const matchStart = getMatchDateObj(match.date);
+    const diffMins = (currentTime - matchStart) / 60000;
+    return diffMins <= 150;
+  });
 
   // Sort today's matches chronologically
   todaysMatches.sort((a, b) => getMatchDateObj(a.date) - getMatchDateObj(b.date));
@@ -117,7 +121,9 @@ const DailyDashboard = () => {
   // Determine future matches (matches whose date is after today)
   // We can do this by filtering bracket16
   const upcomingMatches = bracket16.filter(match => {
-    if (match.status === 'finished') return false; // Hide finished matches
+    const matchStart = getMatchDateObj(match.date);
+    const diffMins = (currentTime - matchStart) / 60000;
+    if (diffMins > 150) return false; // Hide matches that have finished in real-time
 
     const matchDayStr = getDayMonthString(match.date);
     if (matchDayStr === todayStr) return false; // It's today
@@ -136,7 +142,6 @@ const DailyDashboard = () => {
 
   // Real "Live" logic
   const isMatchLive = (match) => {
-    if (match.status === 'finished') return false;
     const matchStart = getMatchDateObj(match.date);
     const diffMins = (currentTime - matchStart) / 60000;
     // Consider it live if current time is between start and +150 minutes (2 hours and 30 mins)
