@@ -145,24 +145,24 @@ const calculateBracket16 = (standings) => {
 
   const matchups = [
     // Lado Izquierdo
-    { id: 76, home: getTeam('E', 1), away: getThirdTeam('1E'), label: '1E vs 3 A/B/C/D/F', date: 'Lun 29 Jun 14:30 hrs.', stadium: 'Gillette Stadium, Boston' },
-    { id: 81, home: getTeam('I', 1), away: getThirdTeam('1I'), label: '1I vs 3 C/D/F/G/H', date: 'Mar 30 Jun 15:00 hrs.', stadium: 'MetLife Stadium, NY/NJ' },
-    { id: 73, home: getTeam('A', 2), away: getTeam('B', 2), label: '2A vs 2B', date: 'Dom 28 Jun 13:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
-    { id: 80, home: getTeam('F', 1), away: getTeam('C', 2), label: '1F vs 2C', date: 'Lun 29 Jun 19:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
-    { id: 84, home: getTeam('K', 2), away: getTeam('L', 2), label: '2K vs 2L', date: 'Jue 2 Jul 17:00 hrs.', stadium: 'BMO Field, Toronto' },
-    { id: 86, home: getTeam('H', 1), away: getTeam('J', 2), label: '1H vs 2J', date: 'Jue 2 Jul 13:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
-    { id: 85, home: getTeam('D', 1), away: getThirdTeam('1D'), label: '1D vs 3 B/E/F/I/J', date: 'Mié 1 Jul 18:00 hrs.', stadium: "Levi's Stadium, SF" },
-    { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J', date: 'Mié 1 Jul 14:00 hrs.', stadium: 'Lumen Field, Seattle' },
+    { id: 76, home: getTeam('E', 1), away: getThirdTeam('1E'), label: '1E vs 3 A/B/C/D/F', date: 'Lun 29 Jun 15:30 hrs.', stadium: 'Gillette Stadium, Boston' },
+    { id: 81, home: getTeam('I', 1), away: getThirdTeam('1I'), label: '1I vs 3 C/D/F/G/H', date: 'Mar 30 Jun 16:00 hrs.', stadium: 'MetLife Stadium, NY/NJ' },
+    { id: 73, home: getTeam('A', 2), away: getTeam('B', 2), label: '2A vs 2B', date: 'Dom 28 Jun 14:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
+    { id: 80, home: getTeam('F', 1), away: getTeam('C', 2), label: '1F vs 2C', date: 'Lun 29 Jun 20:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
+    { id: 84, home: getTeam('K', 2), away: getTeam('L', 2), label: '2K vs 2L', date: 'Jue 2 Jul 18:00 hrs.', stadium: 'BMO Field, Toronto' },
+    { id: 86, home: getTeam('H', 1), away: getTeam('J', 2), label: '1H vs 2J', date: 'Jue 2 Jul 14:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
+    { id: 85, home: getTeam('D', 1), away: getThirdTeam('1D'), label: '1D vs 3 B/E/F/I/J', date: 'Mié 1 Jul 19:00 hrs.', stadium: "Levi's Stadium, SF" },
+    { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J', date: 'Mié 1 Jul 15:00 hrs.', stadium: 'Lumen Field, Seattle' },
     
     // Lado Derecho
     { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F', date: 'Lun 29 Jun 12:00 hrs.', stadium: 'NRG Stadium, Houston' },
-    { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I', date: 'Mar 30 Jun 11:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
-    { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I', date: 'Mar 30 Jun 19:00 hrs.', stadium: 'Estadio Azteca, CDMX' },
-    { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K', date: 'Mié 1 Jul 10:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
-    { id: 88, home: getTeam('J', 1), away: getTeam('H', 2), label: '1J vs 2H', date: 'Vie 3 Jul 16:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
-    { id: 78, home: getTeam('D', 2), away: getTeam('G', 2), label: '2D vs 2G', date: 'Vie 3 Jul 12:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
-    { id: 79, home: getTeam('B', 1), away: getThirdTeam('1B'), label: '1B vs 3 E/F/G/I/J', date: 'Jue 2 Jul 21:00 hrs.', stadium: 'BC Place, Vancouver' },
-    { id: 83, home: getTeam('K', 1), away: getThirdTeam('1K'), label: '1K vs 3 D/E/I/J/L', date: 'Vie 3 Jul 19:30 hrs.', stadium: 'Arrowhead, Kansas City' },
+    { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I', date: 'Mar 30 Jun 12:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
+    { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I', date: 'Mar 30 Jun 20:00 hrs.', stadium: 'Estadio Azteca, CDMX' },
+    { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K', date: 'Mié 1 Jul 11:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
+    { id: 88, home: getTeam('J', 1), away: getTeam('H', 2), label: '1J vs 2H', date: 'Vie 3 Jul 17:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
+    { id: 78, home: getTeam('D', 2), away: getTeam('G', 2), label: '2D vs 2G', date: 'Vie 3 Jul 13:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
+    { id: 79, home: getTeam('B', 1), away: getThirdTeam('1B'), label: '1B vs 3 E/F/G/I/J', date: 'Jue 2 Jul 22:00 hrs.', stadium: 'BC Place, Vancouver' },
+    { id: 83, home: getTeam('K', 1), away: getThirdTeam('1K'), label: '1K vs 3 D/E/I/J/L', date: 'Vie 3 Jul 20:30 hrs.', stadium: 'Arrowhead, Kansas City' },
   ];
 
   return matchups;
@@ -172,6 +172,10 @@ export const DataProvider = ({ children }) => {
   const [matches, setMatches] = useState(initialMatches);
   const [standings, setStandings] = useState({});
   const [bracket16, setBracket16] = useState([]);
+  const [bracket8, setBracket8] = useState([]);
+  const [bracket4, setBracket4] = useState([]);
+  const [bracket2, setBracket2] = useState([]);
+  const [bracket1, setBracket1] = useState([]);
   const [dbData, setDbData] = useState([]);
 
   useEffect(() => {
@@ -234,6 +238,80 @@ export const DataProvider = ({ children }) => {
     }
   }, [matches, dbData]);
 
+  useEffect(() => {
+    if (bracket16.length === 0) return;
+
+    const getWinner = (match) => {
+      if (!match || match.status !== 'finished' || match.scoreHome === undefined || match.scoreHome === null) {
+        return { name: 'Por definir', flag: '❓' };
+      }
+      if (match.scoreHome > match.scoreAway) return match.home;
+      if (match.scoreAway > match.scoreHome) return match.away;
+      return match.home; // Fallback for ties for now
+    };
+
+    const findMatch = (bracket, id) => bracket.find(m => m.id === id);
+
+    // Helpers to merge dbData
+    const mergeDb = (matchesArray) => {
+      if (!dbData || dbData.length === 0) return matchesArray;
+      return matchesArray.map(m => {
+        const dbMatch = dbData.find(dm => dm.id === m.id);
+        if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
+          return {
+            ...m,
+            scoreHome: dbMatch.score_home,
+            scoreAway: dbMatch.score_away,
+            status: dbMatch.status || 'finished'
+          };
+        }
+        return m;
+      });
+    };
+
+    // Calculate Octavos (bracket8)
+    const b8 = mergeDb([
+      // Lado Izquierdo
+      { id: 89, home: getWinner(findMatch(bracket16, 76)), away: getWinner(findMatch(bracket16, 81)), label: 'Octavos 1', date: 'Sáb 4 Jul 11:00 hrs.', stadium: 'Lincoln Financial Field, Filadelfia' },
+      { id: 90, home: getWinner(findMatch(bracket16, 73)), away: getWinner(findMatch(bracket16, 80)), label: 'Octavos 2', date: 'Sáb 4 Jul 19:30 hrs.', stadium: 'NRG Stadium, Houston' },
+      { id: 91, home: getWinner(findMatch(bracket16, 84)), away: getWinner(findMatch(bracket16, 86)), label: 'Octavos 3', date: 'Dom 5 Jul 15:00 hrs.', stadium: 'MetLife Stadium, NY/NJ' },
+      { id: 92, home: getWinner(findMatch(bracket16, 85)), away: getWinner(findMatch(bracket16, 77)), label: 'Octavos 4', date: 'Dom 5 Jul 20:00 hrs.', stadium: 'Estadio Azteca, CDMX' },
+      // Lado Derecho
+      { id: 93, home: getWinner(findMatch(bracket16, 75)), away: getWinner(findMatch(bracket16, 82)), label: 'Octavos 5', date: 'Lun 6 Jul 16:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
+      { id: 94, home: getWinner(findMatch(bracket16, 74)), away: getWinner(findMatch(bracket16, 87)), label: 'Octavos 6', date: 'Lun 6 Jul 20:30 hrs.', stadium: 'Lumen Field, Seattle' },
+      { id: 95, home: getWinner(findMatch(bracket16, 88)), away: getWinner(findMatch(bracket16, 78)), label: 'Octavos 7', date: 'Mar 7 Jul 18:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
+      { id: 96, home: getWinner(findMatch(bracket16, 79)), away: getWinner(findMatch(bracket16, 83)), label: 'Octavos 8', date: 'Mar 7 Jul 21:00 hrs.', stadium: 'Gillette Stadium, Boston' }
+    ]);
+    setBracket8(b8);
+
+    // Calculate Cuartos (bracket4)
+    const b4 = mergeDb([
+      // Lado Izquierdo
+      { id: 97, home: getWinner(findMatch(b8, 89)), away: getWinner(findMatch(b8, 90)), label: 'Cuartos 1', date: 'Jue 9 Jul 19:30 hrs.', stadium: 'Gillette Stadium, Boston' },
+      { id: 98, home: getWinner(findMatch(b8, 91)), away: getWinner(findMatch(b8, 92)), label: 'Cuartos 2', date: 'Vie 10 Jul 20:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
+      // Lado Derecho
+      { id: 99, home: getWinner(findMatch(b8, 93)), away: getWinner(findMatch(b8, 94)), label: 'Cuartos 3', date: 'Sáb 11 Jul 15:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
+      { id: 100, home: getWinner(findMatch(b8, 95)), away: getWinner(findMatch(b8, 96)), label: 'Cuartos 4', date: 'Sáb 11 Jul 20:00 hrs.', stadium: 'Arrowhead, Kansas City' }
+    ]);
+    setBracket4(b4);
+
+    // Calculate Semis (bracket2)
+    const b2 = mergeDb([
+      // Lado Izquierdo
+      { id: 101, home: getWinner(findMatch(b4, 97)), away: getWinner(findMatch(b4, 98)), label: 'Semifinal 1', date: 'Mar 14 Jul 20:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
+      // Lado Derecho
+      { id: 102, home: getWinner(findMatch(b4, 99)), away: getWinner(findMatch(b4, 100)), label: 'Semifinal 2', date: 'Mié 15 Jul 20:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' }
+    ]);
+    setBracket2(b2);
+
+    // Calculate Final (bracket1)
+    const b1 = mergeDb([
+      { id: 104, home: getWinner(findMatch(b2, 101)), away: getWinner(findMatch(b2, 102)), label: 'Gran Final', date: 'Dom 19 Jul 12:00 hrs.', stadium: 'MetLife Stadium, NY/NJ' }
+    ]);
+    setBracket1(b1);
+
+  }, [bracket16, dbData]);
+
   const updateMatch = async (matchId, scoreHome, scoreAway) => {
     const home = parseInt(scoreHome) || 0;
     const away = parseInt(scoreAway) || 0;
@@ -245,13 +323,16 @@ export const DataProvider = ({ children }) => {
           ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
           : m
       ));
-    } else {
+    } else if (matchId <= 88) {
       setBracket16(prev => prev.map(m => 
         m.id === matchId 
           ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
           : m
       ));
-      // Also update dbData to keep it in sync for re-renders
+    }
+    
+    if (matchId > 72) {
+      // Update dbData to keep it in sync for re-renders and advanced brackets
       setDbData(prev => {
         const exists = prev.find(dm => dm.id === matchId);
         if (exists) {
@@ -279,7 +360,7 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ matches, standings, bracket16, updateMatch }}>
+    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch }}>
       {Object.keys(standings).length > 0 ? children : null}
     </DataContext.Provider>
   );

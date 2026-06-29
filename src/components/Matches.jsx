@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Matches = () => {
-  const { matches, updateMatch, bracket16 } = useContext(DataContext);
+  const { matches, updateMatch, bracket16, bracket8, bracket4, bracket2, bracket1 } = useContext(DataContext);
   const [filter, setFilter] = useState('all'); // all, finished, upcoming
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
@@ -16,36 +16,10 @@ const Matches = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const isMatchLive = (match) => {
-    const matchStart = new Date(match.date);
-    const now = currentTime;
-    const diffMs = now - matchStart;
-    const diffMins = diffMs / 60000;
-    
-    // Consider it live if current time is between start and +135 minutes (2 hours and 15 mins)
-    return diffMins >= 0 && diffMins <= 135;
-  };
-
-  let filteredMatches = matches.filter(match => {
-    if (filter === 'all') return true;
-    return match.status === filter;
-  });
-
-  if (filter === 'upcoming' || filter === 'all') {
-    const formattedBracket16 = (bracket16 || []).map(m => ({
-      ...m,
-      stage: '16avos - ' + m.label,
-      status: 'upcoming'
-    }));
-    filteredMatches = [...filteredMatches, ...formattedBracket16];
-  }
-
-  // Helper to get month index
-  const monthMap = { "Ene": 0, "Feb": 1, "Mar": 2, "Abr": 3, "May": 4, "Jun": 5, "Jul": 6, "Ago": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dic": 11 };
-
   // Parse custom date string to Date object
   const getMatchDateObj = (dateStr) => {
     if (!dateStr) return new Date(0);
+    const monthMap = { "Ene": 0, "Feb": 1, "Mar": 2, "Abr": 3, "May": 4, "Jun": 5, "Jul": 6, "Ago": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dic": 11 };
     const parts = dateStr.split(' ');
     if (parts.length >= 4 && monthMap[parts[2]] !== undefined) {
       const day = parseInt(parts[1]);
@@ -58,6 +32,48 @@ const Matches = () => {
     const stdDate = new Date(dateStr);
     return isNaN(stdDate.getTime()) ? new Date(0) : stdDate;
   };
+
+  const isMatchLive = (match) => {
+    if (match.status === 'finished') return false;
+    const matchStart = getMatchDateObj(match.date);
+    const diffMins = (currentTime - matchStart) / 60000;
+    
+    // Consider it live if current time is between start and +150 minutes (2 hours and 30 mins)
+    return diffMins >= 0 && diffMins <= 150;
+  };
+
+  let filteredMatches = matches.filter(match => {
+    if (filter === 'all') return true;
+    return match.status === filter;
+  });
+
+  const formatBracket = (bracket, stagePrefix) => {
+    return (bracket || []).map(m => ({
+      ...m,
+      stage: `${stagePrefix} - ${m.label}`,
+      status: m.status || 'upcoming'
+    }));
+  };
+
+  const allAdvancedBrackets = [
+    ...formatBracket(bracket16, '16avos'),
+    ...formatBracket(bracket8, 'Octavos'),
+    ...formatBracket(bracket4, 'Cuartos'),
+    ...formatBracket(bracket2, 'Semifinal'),
+    ...formatBracket(bracket1, 'Final')
+  ];
+
+  if (filter === 'upcoming' || filter === 'all') {
+    const filteredAdvanced = filter === 'upcoming' 
+      ? allAdvancedBrackets.filter(m => m.status !== 'finished' || isMatchLive(m))
+      : allAdvancedBrackets;
+
+    filteredMatches = [...filteredMatches, ...filteredAdvanced];
+  } else if (filter === 'finished') {
+    const finishedAdvanced = allAdvancedBrackets.filter(m => m.status === 'finished');
+    filteredMatches = [...filteredMatches, ...finishedAdvanced];
+  }
+
 
   const groupedMatches = filteredMatches.reduce((acc, match) => {
     let stageName = 'Fase de Grupos';
@@ -160,7 +176,7 @@ const Matches = () => {
                 <div 
                   key={match.id} 
                   className="glass match-card" 
-                  onClick={() => { if (editingMatchId !== match.id) startEditing(match); }}
+                  onDoubleClick={() => { if (editingMatchId !== match.id) startEditing(match); }}
                   style={{ cursor: 'pointer', position: 'relative', transition: 'all 0.3s ease' }}
                 >
                   <div className="match-header">
@@ -247,15 +263,15 @@ const Matches = () => {
                     </div>
                   ) : (isMatchLive(match) && match.status !== 'finished') ? (
                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
-                      Toca para editar
+                      Doble click para editar
                     </div>
                   ) : match.status === 'upcoming' ? (
                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'var(--primary)', fontSize: '0.85em', opacity: 0.8 }}>
-                      Toca para simular
+                      Doble click para simular
                     </div>
                   ) : (
                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.8em', opacity: 0.8 }}>
-                      Toca para editar
+                      Doble click para editar
                     </div>
                   )}
                 </div>

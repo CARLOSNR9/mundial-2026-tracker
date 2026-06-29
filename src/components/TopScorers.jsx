@@ -40,51 +40,66 @@ const TopScorers = () => {
       {/* Stats Panel */}
       <div className="glass" style={{ padding: '20px' }}>
         <h2 style={{ fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '15px' }}>Datos Curiosos del Torneo</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '15px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' }}>
           
           <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', textAlign: 'center' }}>
             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Goles Totales</div>
-            <div style={{ fontSize: '2rem', fontWeight: '800', color: '#fff' }}>{totalGoals}</div>
+            <div style={{ fontSize: '2rem', fontWeight: '800', color: '#fff' }}>217</div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>en 72 partidos</div>
+            <div style={{ fontSize: '0.9rem', color: 'var(--primary)', marginTop: '5px' }}>Promedio: 3.01 por partido</div>
           </div>
 
           <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Récord Histórico</div>
-            {isRecordBroken ? (
-              <div style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--primary)', marginTop: '5px' }}>¡Récord Roto!</div>
-            ) : (
-              <>
-                <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--warning)' }}>{goalsToRecord}</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>para superar Qatar (172)</div>
-              </>
-            )}
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Mundial con más goles</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--warning)', marginTop: '5px' }}>¡Récord Roto!</div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '5px' }}>
+              Superó los 172 goles de Qatar 2022 y aún faltan 32 partidos.
+            </div>
           </div>
 
           <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Más Goleador</div>
-            {mostGoalsTeam ? (
-              <>
-                <div style={{ fontSize: '1.5rem', marginTop: '5px' }}>{mostGoalsTeam.team.flag}</div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{mostGoalsTeam.team.name}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--primary)' }}>{mostGoalsTeam.gf} goles</div>
-              </>
-            ) : (
-              <div style={{ fontSize: '0.9rem', marginTop: '10px' }}>N/A</div>
-            )}
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Más Goleadoras</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}><span>🥇 Francia</span> <b>10</b></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}><span>Brasil</span> <b>9</b></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}><span>Argentina</span> <b>9</b></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}><span>Alemania</span> <b>9</b></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}><span>España</span> <b>8</b></div>
+            </div>
           </div>
 
           <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Menos Goleador</div>
-            {leastGoalsTeam ? (
-              <>
-                <div style={{ fontSize: '1.5rem', marginTop: '5px' }}>{leastGoalsTeam.team.flag}</div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{leastGoalsTeam.team.name}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--danger)' }}>{leastGoalsTeam.gf} goles</div>
-              </>
-            ) : (
-              <div style={{ fontSize: '0.9rem', marginTop: '10px' }}>N/A</div>
-            )}
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Menos Goleadoras (1 gol)</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '10px', fontSize: '0.8rem', color: 'var(--danger)' }}>
+              <span>Qatar</span>
+              <span>Turquía</span>
+              <span>Nueva Zelanda</span>
+              <span>Panamá</span>
+            </div>
           </div>
+        </div>
 
+        {/* Historical Record Table */}
+        <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '8px', padding: '15px' }}>
+          <h3 style={{ fontSize: '1rem', color: 'var(--text-color)', marginBottom: '10px' }}>Récord Histórico de Goles por Edición</h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)' }}>
+                <th style={{ padding: '8px' }}>Mundial</th>
+                <th style={{ padding: '8px' }}>Goles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ color: 'var(--primary)', fontWeight: 'bold' }}>
+                <td style={{ padding: '8px' }}>2026</td>
+                <td style={{ padding: '8px' }}>217 (hasta ahora)</td>
+              </tr>
+              <tr><td style={{ padding: '8px' }}>2022</td><td style={{ padding: '8px' }}>172</td></tr>
+              <tr><td style={{ padding: '8px' }}>2018</td><td style={{ padding: '8px' }}>169</td></tr>
+              <tr><td style={{ padding: '8px' }}>2014</td><td style={{ padding: '8px' }}>171</td></tr>
+              <tr><td style={{ padding: '8px' }}>1998</td><td style={{ padding: '8px' }}>171</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
