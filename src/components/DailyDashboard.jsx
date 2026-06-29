@@ -108,12 +108,17 @@ const DailyDashboard = () => {
   // Find all matches for "Today"
   let todaysMatches = matchesByDay[todayStr] || [];
 
+  // Filter out finished matches to prioritize live or upcoming matches
+  todaysMatches = todaysMatches.filter(match => match.status !== 'finished');
+
   // Sort today's matches chronologically
   todaysMatches.sort((a, b) => getMatchDateObj(a.date) - getMatchDateObj(b.date));
 
   // Determine future matches (matches whose date is after today)
   // We can do this by filtering bracket16
   const upcomingMatches = bracket16.filter(match => {
+    if (match.status === 'finished') return false; // Hide finished matches
+
     const matchDayStr = getDayMonthString(match.date);
     if (matchDayStr === todayStr) return false; // It's today
     
@@ -157,9 +162,14 @@ const DailyDashboard = () => {
       </div>
 
       <div className="todays-matches" style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginBottom: '50px' }}>
-        {todaysMatches.map(match => {
-          const live = isMatchLive(match);
-          const curiosity = matchCuriosities[match.id] || "No hay datos curiosos disponibles para este partido.";
+        {todaysMatches.length === 0 ? (
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem', padding: '20px' }}>
+            No hay más partidos programados para hoy o ya han finalizado. Revisa los próximos encuentros.
+          </div>
+        ) : (
+          todaysMatches.map(match => {
+            const live = isMatchLive(match);
+            const curiosity = matchCuriosities[match.id] || "No hay datos curiosos disponibles para este partido.";
 
           return (
             <div key={match.id} className={`glass match-card ${live ? 'live-match-card' : ''}`} 
@@ -259,9 +269,7 @@ const DailyDashboard = () => {
 
             </div>
           );
-        })}
-        {todaysMatches.length === 0 && (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>No hay partidos para mostrar hoy.</div>
+        })
         )}
       </div>
 
