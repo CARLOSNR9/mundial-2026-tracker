@@ -230,22 +230,16 @@ const DailyDashboard = () => {
               </div>
 
               {/* Botones de acción del marcador */}
-              <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                {editingMatchId === match.id ? (
-                  <>
-                    <button onClick={() => handleSave(match.id)} className="btn-primary" style={{ marginRight: '10px', padding: '10px 25px', fontSize: '1.1rem' }}>
-                      Guardar Resultado
-                    </button>
-                    <button onClick={() => setEditingMatchId(null)} className="btn-secondary" style={{ padding: '10px 25px', fontSize: '1.1rem' }}>
-                      Cancelar
-                    </button>
-                  </>
-                ) : (live || match.status === 'finished') ? (
-                  <button onClick={() => startEditing(match)} className="btn-secondary" style={{ padding: '8px 20px' }}>
-                    {match.status === 'finished' ? 'Editar Resultado' : 'Actualizar Marcador'}
+              {editingMatchId === match.id && (
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  <button onClick={() => handleSave(match.id)} className="btn-primary" style={{ marginRight: '10px', padding: '10px 25px', fontSize: '1.1rem' }}>
+                    Guardar Resultado
                   </button>
-                ) : null}
-              </div>
+                  <button onClick={() => setEditingMatchId(null)} className="btn-secondary" style={{ padding: '10px 25px', fontSize: '1.1rem' }}>
+                    Cancelar
+                  </button>
+                </div>
+              )}
 
               {/* Curiosidad IA y Próximo Rival */}
               <div style={{ background: 'rgba(0, 255, 136, 0.05)', borderLeft: '4px solid var(--primary)', padding: '15px', borderRadius: '0 8px 8px 0' }}>

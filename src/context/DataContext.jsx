@@ -172,6 +172,7 @@ export const DataProvider = ({ children }) => {
   const [matches, setMatches] = useState(initialMatches);
   const [standings, setStandings] = useState({});
   const [bracket16, setBracket16] = useState([]);
+  const [dbData, setDbData] = useState([]);
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -183,6 +184,7 @@ export const DataProvider = ({ children }) => {
         if (error) throw error;
         
         if (data && data.length > 0) {
+          setDbData(data);
           setMatches(prevMatches => {
             return prevMatches.map(m => {
               const dbMatch = data.find(dm => dm.id === m.id);
@@ -212,20 +214,52 @@ export const DataProvider = ({ children }) => {
     setStandings(newStandings);
 
     if (Object.keys(newStandings).length === 12) {
-      setBracket16(calculateBracket16(newStandings));
+      let b16 = calculateBracket16(newStandings);
+      // Merge with database data if available
+      if (dbData && dbData.length > 0) {
+        b16 = b16.map(m => {
+          const dbMatch = dbData.find(dm => dm.id === m.id);
+          if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
+            return {
+              ...m,
+              scoreHome: dbMatch.score_home,
+              scoreAway: dbMatch.score_away,
+              status: dbMatch.status || 'finished'
+            };
+          }
+          return m;
+        });
+      }
+      setBracket16(b16);
     }
-  }, [matches]);
+  }, [matches, dbData]);
 
   const updateMatch = async (matchId, scoreHome, scoreAway) => {
     const home = parseInt(scoreHome) || 0;
     const away = parseInt(scoreAway) || 0;
 
     // Actualización local
-    setMatches(prev => prev.map(m => 
-      m.id === matchId 
-        ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
-        : m
-    ));
+    if (matchId <= 72) {
+      setMatches(prev => prev.map(m => 
+        m.id === matchId 
+          ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
+          : m
+      ));
+    } else {
+      setBracket16(prev => prev.map(m => 
+        m.id === matchId 
+          ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
+          : m
+      ));
+      // Also update dbData to keep it in sync for re-renders
+      setDbData(prev => {
+        const exists = prev.find(dm => dm.id === matchId);
+        if (exists) {
+          return prev.map(dm => dm.id === matchId ? { ...dm, score_home: home, score_away: away, status: 'finished' } : dm);
+        }
+        return [...prev, { id: matchId, score_home: home, score_away: away, status: 'finished' }];
+      });
+    }
 
     // Sincronizar con Supabase
     try {
