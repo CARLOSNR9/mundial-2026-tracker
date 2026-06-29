@@ -155,7 +155,7 @@ const calculateBracket16 = (standings) => {
     { id: 77, home: getTeam('G', 1), away: getThirdTeam('1G'), label: '1G vs 3 A/E/H/I/J', date: 'Mié 1 Jul 14:00 hrs.', stadium: 'Lumen Field, Seattle' },
     
     // Lado Derecho
-    { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F', date: 'Lun 29 Jun 11:00 hrs.', stadium: 'NRG Stadium, Houston' },
+    { id: 75, home: getTeam('C', 1), away: getTeam('F', 2), label: '1C vs 2F', date: 'Lun 29 Jun 12:00 hrs.', stadium: 'NRG Stadium, Houston' },
     { id: 82, home: getTeam('E', 2), away: getTeam('I', 2), label: '2E vs 2I', date: 'Mar 30 Jun 11:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
     { id: 74, home: getTeam('A', 1), away: getThirdTeam('1A'), label: '1A vs 3 C/E/F/H/I', date: 'Mar 30 Jun 19:00 hrs.', stadium: 'Estadio Azteca, CDMX' },
     { id: 87, home: getTeam('L', 1), away: getThirdTeam('1L'), label: '1L vs 3 E/H/I/J/K', date: 'Mié 1 Jul 10:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },

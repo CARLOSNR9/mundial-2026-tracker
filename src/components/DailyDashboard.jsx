@@ -247,24 +247,20 @@ const DailyDashboard = () => {
                 ) : null}
               </div>
 
-              {/* Info extra para partido en vivo o finalizado */}
-              {(live || match.status === 'finished') && (
-                <div style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '8px', textAlign: 'center', marginBottom: '15px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <p style={{ margin: 0, color: 'var(--warning)', fontWeight: 'bold', fontSize: '0.95rem' }}>
-                    🔜 {getNextOpponentText(match.id)}
-                  </p>
-                </div>
-              )}
-
-              {/* Curiosidad IA */}
+              {/* Curiosidad IA y Próximo Rival */}
               <div style={{ background: 'rgba(0, 255, 136, 0.05)', borderLeft: '4px solid var(--primary)', padding: '15px', borderRadius: '0 8px 8px 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <span style={{ fontSize: '1.2rem' }}>🤖</span>
                   <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '0.85rem', textTransform: 'uppercase' }}>Análisis IA</span>
                 </div>
-                <p style={{ margin: 0, color: 'var(--text-color)', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, color: 'var(--text-color)', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '10px' }}>
                   {curiosity}
                 </p>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px' }}>
+                  <p style={{ margin: 0, color: 'var(--warning)', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                    🔜 {getNextOpponentText(match.id)}
+                  </p>
+                </div>
               </div>
 
             </div>
