@@ -205,6 +205,11 @@ const Matches = () => {
                       <span>{formatDate(match.date)}</span>
                     )}
                   </div>
+                  {match.stadium && (
+                    <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--primary)', opacity: 0.9, marginTop: '-5px', marginBottom: '10px' }}>
+                      📍 {match.stadium}
+                    </div>
+                  )}
                   
                   <div className="match-teams">
                     <div className="team-row">

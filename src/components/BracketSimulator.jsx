@@ -61,6 +61,7 @@ const BracketSimulator = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
             <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>{match.date.toUpperCase()}</span>
+            {match.stadium && <span style={{ fontSize: '0.45rem', color: 'var(--primary)', opacity: 0.8, marginTop: '2px' }}>📍 {match.stadium.toUpperCase()}</span>}
           </div>
         </div>
         <div className="team-row" style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
