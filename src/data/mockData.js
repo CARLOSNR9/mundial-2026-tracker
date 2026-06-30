@@ -217,20 +217,22 @@ export const matchesData = [
 ];
 
 export const topScorers = [
-  { id: 1, name: 'Lionel Messi', team: teams.argentina, goals: 6, assists: 0 },
-  { id: 2, name: 'Vinícius Júnior', team: teams.brazil, goals: 5, assists: 1 },
-  { id: 3, name: 'Deniz Undav', team: teams.germany, goals: 3, assists: 0 },
-  { id: 4, name: 'Kylian Mbappé', team: teams.france, goals: 3, assists: 1 },
-  { id: 5, name: 'Erling Haaland', team: teams.norway, goals: 3, assists: 0 },
+  { id: 1, name: 'Lionel Messi', team: teams.argentina, goals: 6, assists: 2 },
+  { id: 2, name: 'Kylian Mbappé', team: teams.france, goals: 4, assists: 0 },
+  { id: 3, name: 'Vinícius Júnior', team: teams.brazil, goals: 4, assists: 1 },
+  { id: 4, name: 'Erling Haaland', team: teams.norway, goals: 4, assists: 0 },
+  { id: 5, name: 'Ousmane Dembélé', team: teams.france, goals: 4, assists: 0 },
   { id: 6, name: 'Harry Kane', team: teams.england, goals: 3, assists: 0 },
-  { id: 7, name: 'Folarin Balogun', team: teams.usa, goals: 3, assists: 0 },
-  // Keeping some others with 2 goals to fill the table
-  { id: 8, name: 'Johan Manzambi', team: teams.switzerland, goals: 2, assists: 1 },
-  { id: 9, name: 'Jonathan David', team: teams.canada, goals: 2, assists: 0 },
-  { id: 10, name: 'Ismael Saibari', team: teams.morocco, goals: 2, assists: 0 },
-  { id: 11, name: 'Matheus Cunha', team: teams.brazil, goals: 2, assists: 0 },
-  { id: 12, name: 'Mikel Oyarzabal', team: teams.spain, goals: 2, assists: 1 },
-  { id: 13, name: 'Ayase Ueda', team: teams.japan, goals: 2, assists: 1 },
-  { id: 14, name: 'Maximiliano Araújo', team: teams.uruguay, goals: 2, assists: 1 },
-  { id: 15, name: 'Cristiano Ronaldo', team: teams.portugal, goals: 2, assists: 0 }
+  { id: 7, name: 'Ismaïla Sarr', team: teams.senegal, goals: 3, assists: 0 },
+  { id: 8, name: 'Matheus Cunha', team: teams.brazil, goals: 3, assists: 0 },
+  { id: 9, name: 'Jonathan David', team: teams.canada, goals: 3, assists: 0 },
+  { id: 10, name: 'Ismael Saibari', team: teams.morocco, goals: 3, assists: 0 },
+  { id: 11, name: 'Yoane Wissa', team: teams.dr_congo, goals: 3, assists: 0 },
+  { id: 12, name: 'Bruno Guimarães', team: teams.brazil, goals: 0, assists: 4 },
+  { id: 13, name: 'Alexander Isak', team: teams.sweden, goals: 4, assists: 3 },
+  { id: 14, name: 'Michael Olise', team: teams.france, goals: 4, assists: 3 },
+  { id: 15, name: 'Florian Wirtz', team: teams.germany, goals: 0, assists: 3 },
+  { id: 16, name: 'Julio Enciso', team: teams.paraguay, goals: 0, assists: 2 },
+  { id: 17, name: 'Hannibal Mejbri', team: teams.tunisia, goals: 0, assists: 2 },
+  { id: 18, name: 'Chris Wood', team: teams.new_zealand, goals: 0, assists: 2 }
 ];
