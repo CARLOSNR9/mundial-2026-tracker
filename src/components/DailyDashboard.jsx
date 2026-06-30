@@ -49,7 +49,7 @@ const DailyDashboard = () => {
 
     let partnerText = '';
     // If partner match is finished, show the winner
-    if (partnerMatch.status === 'finished') {
+    if (partnerMatch.status && partnerMatch.status.startsWith('finished')) {
       const homeScore = parseInt(partnerMatch.scoreHome) || 0;
       const awayScore = parseInt(partnerMatch.scoreAway) || 0;
       if (homeScore > awayScore) {
@@ -57,7 +57,20 @@ const DailyDashboard = () => {
       } else if (awayScore > homeScore) {
         partnerText = partnerMatch.away.name;
       } else {
-        partnerText = `el ganador de ${partnerMatch.home.name} vs ${partnerMatch.away.name}`;
+        // Tie breaker via penalties
+        if (partnerMatch.penaltiesHome !== undefined && partnerMatch.penaltiesHome !== null) {
+          const homePen = parseInt(partnerMatch.penaltiesHome) || 0;
+          const awayPen = parseInt(partnerMatch.penaltiesAway) || 0;
+          if (homePen > awayPen) {
+            partnerText = partnerMatch.home.name;
+          } else if (awayPen > homePen) {
+            partnerText = partnerMatch.away.name;
+          } else {
+            partnerText = `el ganador de ${partnerMatch.home.name} vs ${partnerMatch.away.name}`;
+          }
+        } else {
+          partnerText = `el ganador de ${partnerMatch.home.name} vs ${partnerMatch.away.name}`;
+        }
       }
     } else {
       partnerText = `el ganador entre ${partnerMatch.home.name} y ${partnerMatch.away.name}`;
