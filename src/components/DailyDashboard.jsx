@@ -10,6 +10,8 @@ const DailyDashboard = () => {
   const [editScoreAway, setEditScoreAway] = useState('');
   const [editPenHome, setEditPenHome] = useState('');
   const [editPenAway, setEditPenAway] = useState('');
+  
+  const { setSelectedTeamId } = useContext(DataContext);
 
   // Update time for checking "live" matches (optional real-time simulation)
   useEffect(() => {
@@ -226,7 +228,12 @@ const DailyDashboard = () => {
               
               <div className="match-teams" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
                 {/* Local */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                <div 
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', cursor: match.home?.id ? 'pointer' : 'default' }}
+                  onClick={(e) => { e.stopPropagation(); if (match.home?.id) setSelectedTeamId(match.home.id); }}
+                  onMouseOver={(e) => match.home?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                  onMouseOut={(e) => match.home?.id && (e.currentTarget.style.color = '')}
+                >
                   <span style={{ fontSize: '3rem' }}>{match.home.flag}</span>
                   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{match.home.name}</span>
                 </div>
@@ -289,7 +296,12 @@ const DailyDashboard = () => {
                 </div>
 
                 {/* Visitante */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                <div 
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', cursor: match.away?.id ? 'pointer' : 'default' }}
+                  onClick={(e) => { e.stopPropagation(); if (match.away?.id) setSelectedTeamId(match.away.id); }}
+                  onMouseOver={(e) => match.away?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                  onMouseOut={(e) => match.away?.id && (e.currentTarget.style.color = '')}
+                >
                   <span style={{ fontSize: '3rem' }}>{match.away.flag}</span>
                   <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{match.away.name}</span>
                 </div>
@@ -345,12 +357,22 @@ const DailyDashboard = () => {
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '40%' }}>
+                <div 
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '40%', cursor: match.home?.id ? 'pointer' : 'default' }}
+                  onClick={(e) => { e.stopPropagation(); if (match.home?.id) setSelectedTeamId(match.home.id); }}
+                  onMouseOver={(e) => match.home?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                  onMouseOut={(e) => match.home?.id && (e.currentTarget.style.color = '')}
+                >
                   <span style={{ fontSize: '1.5rem' }}>{match.home.flag}</span>
                   <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{match.home.name}</span>
                 </div>
                 <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>vs</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '40%', justifyContent: 'flex-end' }}>
+                <div 
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '40%', justifyContent: 'flex-end', cursor: match.away?.id ? 'pointer' : 'default' }}
+                  onClick={(e) => { e.stopPropagation(); if (match.away?.id) setSelectedTeamId(match.away.id); }}
+                  onMouseOver={(e) => match.away?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                  onMouseOut={(e) => match.away?.id && (e.currentTarget.style.color = '')}
+                >
                   <span style={{ fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'right' }}>{match.away.name}</span>
                   <span style={{ fontSize: '1.5rem' }}>{match.away.flag}</span>
                 </div>

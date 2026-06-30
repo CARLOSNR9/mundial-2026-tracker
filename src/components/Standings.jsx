@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Standings = () => {
-  const { standings, matches, updateMatch, bracket16 } = useContext(DataContext);
+  const { standings, matches, updateMatch, bracket16, setSelectedTeamId } = useContext(DataContext);
   const groups = Object.keys(standings);
   
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -95,7 +95,13 @@ const Standings = () => {
                 
                 <div className="match-teams">
                   <div className="team-row">
-                    <div className="team-info">
+                    <div 
+                      className="team-info" 
+                      onClick={(e) => { e.stopPropagation(); setSelectedTeamId(match.home.id); }}
+                      style={{ cursor: 'pointer' }}
+                      onMouseOver={(e) => e.currentTarget.style.color = 'var(--primary)'}
+                      onMouseOut={(e) => e.currentTarget.style.color = ''}
+                    >
                       <span className="flag">{match.home.flag}</span>
                       <span>{match.home.name}</span>
                     </div>
@@ -120,7 +126,13 @@ const Standings = () => {
                   </div>
                   
                   <div className="team-row">
-                    <div className="team-info">
+                    <div 
+                      className="team-info"
+                      onClick={(e) => { e.stopPropagation(); setSelectedTeamId(match.away.id); }}
+                      style={{ cursor: 'pointer' }}
+                      onMouseOver={(e) => e.currentTarget.style.color = 'var(--primary)'}
+                      onMouseOut={(e) => e.currentTarget.style.color = ''}
+                    >
                       <span className="flag">{match.away.flag}</span>
                       <span>{match.away.name}</span>
                     </div>
@@ -209,8 +221,14 @@ const Standings = () => {
 
               return (
                 <tr key={row.team.id} style={{ borderLeft: `3px solid ${borderColor}` }}>
-                  <td className="team-cell">
-                    <span className="scorer-rank" style={{ fontSize: '1rem', width: '20px' }}>{index + 1}</span>
+                  <td 
+                    className="team-cell" 
+                    onClick={() => setSelectedTeamId(row.team.id)}
+                    style={{ cursor: 'pointer' }}
+                    onMouseOver={(e) => e.currentTarget.style.color = 'var(--primary)'}
+                    onMouseOut={(e) => e.currentTarget.style.color = ''}
+                  >
+                    <span className="scorer-rank" style={{ fontSize: '1rem', width: '20px', color: 'var(--text-color)' }}>{index + 1}</span>
                     <span className="flag">{row.team.flag}</span>
                     <span>{row.team.name}</span>
                   </td>

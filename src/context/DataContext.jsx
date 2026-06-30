@@ -156,6 +156,8 @@ export const DataProvider = ({ children }) => {
   const [bracket2, setBracket2] = useState([]);
   const [bracket1, setBracket1] = useState([]);
   const [dbData, setDbData] = useState([]);
+  
+  const [selectedTeamId, setSelectedTeamId] = useState(null);
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -356,7 +358,7 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch }}>
+    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch, selectedTeamId, setSelectedTeamId }}>
       {Object.keys(standings).length > 0 ? children : null}
     </DataContext.Provider>
   );

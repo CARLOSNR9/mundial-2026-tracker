@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const Matches = () => {
-  const { matches, updateMatch, bracket16, bracket8, bracket4, bracket2, bracket1 } = useContext(DataContext);
+  const { matches, updateMatch, bracket16, bracket8, bracket4, bracket2, bracket1, setSelectedTeamId } = useContext(DataContext);
   const [filter, setFilter] = useState('all'); // all, finished, upcoming
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
@@ -213,9 +213,15 @@ const Matches = () => {
                   
                   <div className="match-teams">
                     <div className="team-row">
-                      <div className="team-info">
-                        <span className="flag">{match.home.flag}</span>
-                        <span>{match.home.name}</span>
+                      <div 
+                        className="team-info"
+                        onClick={(e) => { e.stopPropagation(); if (match.home?.id) setSelectedTeamId(match.home.id); }}
+                        style={{ cursor: match.home?.id ? 'pointer' : 'default' }}
+                        onMouseOver={(e) => match.home?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                        onMouseOut={(e) => match.home?.id && (e.currentTarget.style.color = '')}
+                      >
+                        <span className="flag">{match.home?.flag || '❓'}</span>
+                        <span>{match.home?.name || 'Por definir'}</span>
                       </div>
                       {editingMatchId === match.id ? (
                         <input 
@@ -240,9 +246,15 @@ const Matches = () => {
                     </div>
                     
                     <div className="team-row">
-                      <div className="team-info">
-                        <span className="flag">{match.away.flag}</span>
-                        <span>{match.away.name}</span>
+                      <div 
+                        className="team-info"
+                        onClick={(e) => { e.stopPropagation(); if (match.away?.id) setSelectedTeamId(match.away.id); }}
+                        style={{ cursor: match.away?.id ? 'pointer' : 'default' }}
+                        onMouseOver={(e) => match.away?.id && (e.currentTarget.style.color = 'var(--primary)')}
+                        onMouseOut={(e) => match.away?.id && (e.currentTarget.style.color = '')}
+                      >
+                        <span className="flag">{match.away?.flag || '❓'}</span>
+                        <span>{match.away?.name || 'Por definir'}</span>
                       </div>
                       {editingMatchId === match.id ? (
                         <input 

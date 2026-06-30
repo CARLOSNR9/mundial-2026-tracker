@@ -5,6 +5,8 @@ import Matches from './components/Matches';
 import TopScorers from './components/TopScorers';
 import BracketSimulator from './components/BracketSimulator';
 import GeneralTable from './components/GeneralTable';
+import TeamSearch from './components/TeamSearch';
+import TeamProfileModal from './components/TeamProfileModal';
 import { DataProvider } from './context/DataContext';
 
 import logo from './assets/logo2026.png';
@@ -67,6 +69,7 @@ const App = () => {
           <br />
           <h1 className="app-title">Mundial 2026</h1>
           <div className="app-subtitle">Tracker Oficial</div>
+          <TeamSearch />
         </header>
 
         {/* Top Navigation */}
@@ -79,6 +82,9 @@ const App = () => {
 
         {/* Bottom Navigation (Desktop only) */}
         <NavigationMenu isBottom={true} />
+        
+        {/* Modals */}
+        <TeamProfileModal />
       </div>
     </DataProvider>
   );

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const BracketSimulator = () => {
-  const { bracket16, bracket8, bracket4, bracket2, bracket1, standings } = useContext(DataContext);
+  const { bracket16, bracket8, bracket4, bracket2, bracket1, standings, setSelectedTeamId } = useContext(DataContext);
 
   if (!bracket16 || bracket16.length === 0) {
     return <div style={{ textAlign: 'center', padding: '20px' }}>Calculando cuadro...</div>;
@@ -65,7 +65,13 @@ const BracketSimulator = () => {
           </div>
         </div>
         <div className="team-row" style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div className="team-info" style={{ fontSize: '0.9rem', opacity: match.home?.id ? 1 : 0.5 }}>
+          <div 
+            className="team-info" 
+            onClick={(e) => { e.stopPropagation(); if (match.home?.id) setSelectedTeamId(match.home.id); }}
+            style={{ fontSize: '0.9rem', opacity: match.home?.id ? 1 : 0.5, cursor: match.home?.id ? 'pointer' : 'default' }}
+            onMouseOver={(e) => match.home?.id && (e.currentTarget.style.color = 'var(--primary)')}
+            onMouseOut={(e) => match.home?.id && (e.currentTarget.style.color = '')}
+          >
             <span className="flag" style={{ fontSize: '1.2rem' }}>{match.home?.flag || '❓'}</span>
             <span>{match.home?.name || 'Por definir'}</span>
           </div>
@@ -79,7 +85,13 @@ const BracketSimulator = () => {
           </div>
         </div>
         <div className="team-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div className="team-info" style={{ fontSize: '0.9rem', opacity: match.away?.id ? 1 : 0.5 }}>
+          <div 
+            className="team-info" 
+            onClick={(e) => { e.stopPropagation(); if (match.away?.id) setSelectedTeamId(match.away.id); }}
+            style={{ fontSize: '0.9rem', opacity: match.away?.id ? 1 : 0.5, cursor: match.away?.id ? 'pointer' : 'default' }}
+            onMouseOver={(e) => match.away?.id && (e.currentTarget.style.color = 'var(--primary)')}
+            onMouseOut={(e) => match.away?.id && (e.currentTarget.style.color = '')}
+          >
             <span className="flag" style={{ fontSize: '1.2rem' }}>{match.away?.flag || '❓'}</span>
             <span>{match.away?.name || 'Por definir'}</span>
           </div>
