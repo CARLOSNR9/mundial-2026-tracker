@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const BracketSimulator = () => {
-  const { bracket16, bracket8, bracket4, bracket2, bracket1, standings, setSelectedTeamId } = useContext(DataContext);
+  const { bracket16, bracket8, bracket4, bracket2, bracket1, standings, setSelectedTeamId, simulateRestOfTournament } = useContext(DataContext);
 
   if (!bracket16 || bracket16.length === 0) {
     return <div style={{ textAlign: 'center', padding: '20px' }}>Calculando cuadro...</div>;
@@ -113,6 +113,29 @@ const BracketSimulator = () => {
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <h2 style={{ color: 'var(--primary)', marginBottom: '5px' }}>Fases Finales del Torneo</h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>El camino completo hacia la Copa del Mundo</p>
+        
+        <button 
+          onClick={simulateRestOfTournament}
+          style={{
+            marginTop: '15px',
+            padding: '10px 20px',
+            backgroundColor: 'var(--primary)',
+            color: 'var(--bg-color)',
+            border: 'none',
+            borderRadius: '25px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: '0 0 15px rgba(0, 255, 136, 0.4)',
+            transition: 'transform 0.2s'
+          }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <span>⚡</span> Modo Dios: Simular Resto
+        </button>
       </div>
 
       <div style={{ overflowX: 'auto', paddingBottom: '40px' }}>

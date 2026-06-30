@@ -357,9 +357,65 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const simulateRestOfTournament = async () => {
+    const simulatedMatches = [];
+    for (let id = 73; id <= 104; id++) {
+      if (id === 103) continue; // Skip 3rd place match if not in bracket
+      
+      // Lógica pseudo-aleatoria simple
+      let home = Math.floor(Math.random() * 4);
+      let away = Math.floor(Math.random() * 4);
+      let penHome = null;
+      let penAway = null;
+      let status = 'finished';
+
+      if (home === away) {
+        penHome = Math.floor(Math.random() * 5) + 3;
+        penAway = Math.floor(Math.random() * 5) + 3;
+        while (penHome === penAway) {
+          penAway = Math.floor(Math.random() * 5) + 3;
+        }
+        status = `finished_pen_${penHome}_${penAway}`;
+      }
+
+      simulatedMatches.push({
+        id,
+        score_home: home,
+        score_away: away,
+        status
+      });
+    }
+
+    // Actualización local para reflejar instantáneamente
+    setDbData(prev => {
+      const newDb = [...prev];
+      simulatedMatches.forEach(sm => {
+        const idx = newDb.findIndex(d => d.id === sm.id);
+        if (idx >= 0) {
+          newDb[idx] = { ...newDb[idx], ...sm };
+        } else {
+          newDb.push(sm);
+        }
+      });
+      return newDb;
+    });
+
+    // Sincronizar con Supabase
+    try {
+      const { error } = await supabase
+        .from('matches')
+        .upsert(simulatedMatches);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error al simular torneo:", error.message);
+    }
+  };
+
   return (
-    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch, selectedTeamId, setSelectedTeamId }}>
+    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch, simulateRestOfTournament, selectedTeamId, setSelectedTeamId }}>
       {Object.keys(standings).length > 0 ? children : null}
     </DataContext.Provider>
   );
 };
+
