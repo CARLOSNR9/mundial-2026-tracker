@@ -357,6 +357,45 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const undoSimulation = async () => {
+    const revertedMatches = [];
+    for (let id = 73; id <= 104; id++) {
+      if (id === 103) continue;
+      
+      revertedMatches.push({
+        id,
+        score_home: null,
+        score_away: null,
+        status: null
+      });
+    }
+
+    // Actualización local para reflejar instantáneamente
+    setDbData(prev => {
+      const newDb = [...prev];
+      revertedMatches.forEach(rm => {
+        const idx = newDb.findIndex(d => d.id === rm.id);
+        if (idx >= 0) {
+          newDb[idx] = { ...newDb[idx], ...rm };
+        } else {
+          newDb.push(rm);
+        }
+      });
+      return newDb;
+    });
+
+    // Sincronizar con Supabase
+    try {
+      const { error } = await supabase
+        .from('matches')
+        .upsert(revertedMatches);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error al deshacer simulación:", error.message);
+    }
+  };
+
   const simulateRestOfTournament = async () => {
     const simulatedMatches = [];
     for (let id = 73; id <= 104; id++) {
@@ -413,7 +452,7 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch, simulateRestOfTournament, selectedTeamId, setSelectedTeamId }}>
+    <DataContext.Provider value={{ matches, standings, bracket16, bracket8, bracket4, bracket2, bracket1, updateMatch, simulateRestOfTournament, undoSimulation, selectedTeamId, setSelectedTeamId }}>
       {Object.keys(standings).length > 0 ? children : null}
     </DataContext.Provider>
   );
