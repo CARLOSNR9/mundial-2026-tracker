@@ -254,7 +254,6 @@ const Matches = () => {
                         )
                       )}
                     </div>
-                    </div>
                   </div>
 
                   {/* Penales Editing UI */}
