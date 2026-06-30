@@ -205,14 +205,14 @@ export const DataProvider = ({ children }) => {
         b16 = b16.map(m => {
           const dbMatch = dbData.find(dm => dm.id === m.id);
           if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
-            const isPen = dbMatch.status && dbMatch.status.startsWith('finished_pen_');
+            const isPen = dbMatch.status && dbMatch.status.includes('pen_');
             return {
               ...m,
               scoreHome: dbMatch.score_home,
               scoreAway: dbMatch.score_away,
               status: dbMatch.status || 'finished',
-              penaltiesHome: isPen ? parseInt(dbMatch.status.split('_')[2]) : null,
-              penaltiesAway: isPen ? parseInt(dbMatch.status.split('_')[3]) : null
+              penaltiesHome: isPen ? parseInt(dbMatch.status.split('_').slice(-2)[0]) : null,
+              penaltiesAway: isPen ? parseInt(dbMatch.status.split('_').slice(-1)[0]) : null
             };
           }
           return m;
@@ -226,7 +226,7 @@ export const DataProvider = ({ children }) => {
     if (bracket16.length === 0) return;
 
     const getWinner = (match) => {
-      const isFinished = match && (match.status === 'finished' || (match.status && match.status.startsWith('finished_pen_')));
+      const isFinished = match && (match.status === 'finished' || (match.status && match.status.includes('pen_')) || (match.status && match.status.includes('simulated')));
       if (!isFinished || match.scoreHome === undefined || match.scoreHome === null) {
         return { name: 'Por definir', flag: '❓' };
       }
@@ -249,14 +249,14 @@ export const DataProvider = ({ children }) => {
       return matchesArray.map(m => {
         const dbMatch = dbData.find(dm => dm.id === m.id);
         if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
-          const isPen = dbMatch.status && dbMatch.status.startsWith('finished_pen_');
+          const isPen = dbMatch.status && dbMatch.status.includes('pen_');
           return {
             ...m,
             scoreHome: dbMatch.score_home,
             scoreAway: dbMatch.score_away,
             status: dbMatch.status || 'finished',
-            penaltiesHome: isPen ? parseInt(dbMatch.status.split('_')[2]) : null,
-            penaltiesAway: isPen ? parseInt(dbMatch.status.split('_')[3]) : null
+            penaltiesHome: isPen ? parseInt(dbMatch.status.split('_').slice(-2)[0]) : null,
+            penaltiesAway: isPen ? parseInt(dbMatch.status.split('_').slice(-1)[0]) : null
           };
         }
         return m;
@@ -359,16 +359,20 @@ export const DataProvider = ({ children }) => {
 
   const undoSimulation = async () => {
     const revertedMatches = [];
-    for (let id = 73; id <= 104; id++) {
-      if (id === 103) continue;
-      
-      revertedMatches.push({
-        id,
-        score_home: null,
-        score_away: null,
-        status: null
-      });
-    }
+    
+    // Solo revertimos los partidos que fueron explícitamente simulados
+    dbData.forEach(match => {
+      if (match.id >= 73 && match.id <= 104 && match.status && match.status.includes('simulated')) {
+        revertedMatches.push({
+          id: match.id,
+          score_home: null,
+          score_away: null,
+          status: null
+        });
+      }
+    });
+
+    if (revertedMatches.length === 0) return;
 
     // Actualización local para reflejar instantáneamente
     setDbData(prev => {
@@ -401,12 +405,18 @@ export const DataProvider = ({ children }) => {
     for (let id = 73; id <= 104; id++) {
       if (id === 103) continue; // Skip 3rd place match if not in bracket
       
+      const existingMatch = dbData.find(m => m.id === id);
+      // Solo simulamos si el partido NO tiene un resultado real
+      if (existingMatch && existingMatch.score_home !== null && existingMatch.score_away !== null && existingMatch.status !== null && !existingMatch.status.includes('simulated')) {
+        continue; // No sobreescribir datos reales
+      }
+
       // Lógica pseudo-aleatoria simple
       let home = Math.floor(Math.random() * 4);
       let away = Math.floor(Math.random() * 4);
       let penHome = null;
       let penAway = null;
-      let status = 'finished';
+      let status = 'simulated';
 
       if (home === away) {
         penHome = Math.floor(Math.random() * 5) + 3;
@@ -414,7 +424,7 @@ export const DataProvider = ({ children }) => {
         while (penHome === penAway) {
           penAway = Math.floor(Math.random() * 5) + 3;
         }
-        status = `finished_pen_${penHome}_${penAway}`;
+        status = `simulated_pen_${penHome}_${penAway}`;
       }
 
       simulatedMatches.push({
