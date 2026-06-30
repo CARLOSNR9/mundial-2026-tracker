@@ -35,18 +35,23 @@ const Matches = () => {
     return isNaN(stdDate.getTime()) ? new Date(0) : stdDate;
   };
 
+  const isMatchFinished = (status) => {
+    return status === 'finished' || (status && status.startsWith('finished_pen_'));
+  };
+
   const isMatchLive = (match) => {
-    if (match.status === 'finished') return false;
     const matchStart = getMatchDateObj(match.date);
     const diffMins = (currentTime - matchStart) / 60000;
     
-    // Consider it live if current time is between start and +150 minutes (2 hours and 30 mins)
-    return diffMins >= 0 && diffMins <= 150;
+    // Consider it live if current time is between start and +180 minutes (3 hours)
+    return diffMins >= 0 && diffMins <= 180;
   };
 
   let filteredMatches = matches.filter(match => {
     if (filter === 'all') return true;
-    return match.status === filter;
+    if (filter === 'finished') return isMatchFinished(match.status);
+    if (filter === 'upcoming') return !isMatchFinished(match.status);
+    return false;
   });
 
   const formatBracket = (bracket, stagePrefix) => {
@@ -67,12 +72,12 @@ const Matches = () => {
 
   if (filter === 'upcoming' || filter === 'all') {
     const filteredAdvanced = filter === 'upcoming' 
-      ? allAdvancedBrackets.filter(m => m.status !== 'finished' || isMatchLive(m))
+      ? allAdvancedBrackets.filter(m => !isMatchFinished(m.status) || isMatchLive(m))
       : allAdvancedBrackets;
 
     filteredMatches = [...filteredMatches, ...filteredAdvanced];
   } else if (filter === 'finished') {
-    const finishedAdvanced = allAdvancedBrackets.filter(m => m.status === 'finished');
+    const finishedAdvanced = allAdvancedBrackets.filter(m => isMatchFinished(m.status));
     filteredMatches = [...filteredMatches, ...finishedAdvanced];
   }
 
@@ -221,7 +226,7 @@ const Matches = () => {
                           onClick={e => e.stopPropagation()}
                         />
                       ) : (
-                        (match.status === 'finished' || isMatchLive(match)) && (
+                        (isMatchFinished(match.status) || isMatchLive(match)) && (
                           <div className={`team-score ${match.scoreHome > match.scoreAway ? 'winner' : ''}`}>
                             {match.scoreHome ?? 0}
                           </div>
@@ -247,7 +252,7 @@ const Matches = () => {
                           onClick={e => e.stopPropagation()}
                         />
                       ) : (
-                        (match.status === 'finished' || isMatchLive(match)) && (
+                        (isMatchFinished(match.status) || isMatchLive(match)) && (
                           <div className={`team-score ${match.scoreAway > match.scoreHome ? 'winner' : ''}`}>
                             {match.scoreAway ?? 0}
                           </div>
