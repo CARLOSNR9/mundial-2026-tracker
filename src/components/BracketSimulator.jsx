@@ -68,18 +68,28 @@ const BracketSimulator = () => {
             <span className="flag" style={{ fontSize: '1.2rem' }}>{match.home?.flag || '❓'}</span>
             <span>{match.home?.name || 'Por definir'}</span>
           </div>
-          {(match.scoreHome !== undefined && match.scoreHome !== null) && (
-            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', paddingRight: '5px' }}>{match.scoreHome}</div>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '5px' }}>
+            {(match.penaltiesHome !== undefined && match.penaltiesHome !== null) && (
+              <span style={{ fontSize: '0.8rem', color: 'var(--warning)', fontWeight: 'bold' }}>({match.penaltiesHome})</span>
+            )}
+            {(match.scoreHome !== undefined && match.scoreHome !== null) && (
+              <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{match.scoreHome}</span>
+            )}
+          </div>
         </div>
         <div className="team-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="team-info" style={{ fontSize: '0.9rem', opacity: match.away?.id ? 1 : 0.5 }}>
             <span className="flag" style={{ fontSize: '1.2rem' }}>{match.away?.flag || '❓'}</span>
             <span>{match.away?.name || 'Por definir'}</span>
           </div>
-          {(match.scoreAway !== undefined && match.scoreAway !== null) && (
-            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', paddingRight: '5px' }}>{match.scoreAway}</div>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '5px' }}>
+            {(match.penaltiesAway !== undefined && match.penaltiesAway !== null) && (
+              <span style={{ fontSize: '0.8rem', color: 'var(--warning)', fontWeight: 'bold' }}>({match.penaltiesAway})</span>
+            )}
+            {(match.scoreAway !== undefined && match.scoreAway !== null) && (
+              <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{match.scoreAway}</span>
+            )}
+          </div>
         </div>
       </div>
     );

@@ -8,6 +8,8 @@ const DailyDashboard = () => {
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
   const [editScoreAway, setEditScoreAway] = useState('');
+  const [editPenHome, setEditPenHome] = useState('');
+  const [editPenAway, setEditPenAway] = useState('');
 
   // Update time for checking "live" matches (optional real-time simulation)
   useEffect(() => {
@@ -152,10 +154,17 @@ const DailyDashboard = () => {
     setEditingMatchId(match.id);
     setEditScoreHome(match.scoreHome ?? '');
     setEditScoreAway(match.scoreAway ?? '');
+    setEditPenHome(match.penaltiesHome ?? '');
+    setEditPenAway(match.penaltiesAway ?? '');
   };
 
   const handleSave = (matchId) => {
-    updateMatch(matchId, editScoreHome, editScoreAway);
+    const isKnockout = matchId > 72;
+    const isTied = editScoreHome !== '' && editScoreAway !== '' && editScoreHome === editScoreAway;
+    const penH = (isKnockout && isTied && editPenHome !== '') ? parseInt(editPenHome) : null;
+    const penA = (isKnockout && isTied && editPenAway !== '') ? parseInt(editPenAway) : null;
+    
+    updateMatch(matchId, editScoreHome, editScoreAway, penH, penA);
     setEditingMatchId(null);
   };
 
@@ -208,32 +217,59 @@ const DailyDashboard = () => {
                 </div>
 
                 {/* Marcador */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  {editingMatchId === match.id ? (
-                    <>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    {editingMatchId === match.id ? (
+                      <>
+                        <input 
+                          type="number" min="0" value={editScoreHome} 
+                          onChange={e => setEditScoreHome(e.target.value)} 
+                          style={{ width: '60px', height: '60px', fontSize: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'white', border: '2px solid var(--primary)', borderRadius: '8px' }}
+                          autoFocus
+                        />
+                        <span style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>-</span>
+                        <input 
+                          type="number" min="0" value={editScoreAway} 
+                          onChange={e => setEditScoreAway(e.target.value)} 
+                          style={{ width: '60px', height: '60px', fontSize: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'white', border: '2px solid var(--primary)', borderRadius: '8px' }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div className="team-score" style={{ fontSize: '2.5rem', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {match.scoreHome ?? '-'}
+                        </div>
+                        <span style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>vs</span>
+                        <div className="team-score" style={{ fontSize: '2.5rem', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {match.scoreAway ?? '-'}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Penales Editing UI */}
+                  {editingMatchId === match.id && match.id > 72 && editScoreHome !== '' && editScoreAway !== '' && editScoreHome === editScoreAway && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--warning)', fontWeight: 'bold' }}>PENALES</span>
                       <input 
-                        type="number" min="0" value={editScoreHome} 
-                        onChange={e => setEditScoreHome(e.target.value)} 
-                        style={{ width: '60px', height: '60px', fontSize: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'white', border: '2px solid var(--primary)', borderRadius: '8px' }}
-                        autoFocus
+                        type="number" min="0" value={editPenHome} 
+                        onChange={e => setEditPenHome(e.target.value)} 
+                        style={{ width: '40px', height: '40px', fontSize: '1.2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'var(--warning)', border: '1px solid var(--warning)', borderRadius: '4px' }}
                       />
-                      <span style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>-</span>
+                      <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>-</span>
                       <input 
-                        type="number" min="0" value={editScoreAway} 
-                        onChange={e => setEditScoreAway(e.target.value)} 
-                        style={{ width: '60px', height: '60px', fontSize: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'white', border: '2px solid var(--primary)', borderRadius: '8px' }}
+                        type="number" min="0" value={editPenAway} 
+                        onChange={e => setEditPenAway(e.target.value)} 
+                        style={{ width: '40px', height: '40px', fontSize: '1.2rem', textAlign: 'center', background: 'rgba(0,0,0,0.5)', color: 'var(--warning)', border: '1px solid var(--warning)', borderRadius: '4px' }}
                       />
-                    </>
-                  ) : (
-                    <>
-                      <div className="team-score" style={{ fontSize: '2.5rem', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {match.scoreHome ?? '-'}
-                      </div>
-                      <span style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>vs</span>
-                      <div className="team-score" style={{ fontSize: '2.5rem', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {match.scoreAway ?? '-'}
-                      </div>
-                    </>
+                    </div>
+                  )}
+
+                  {/* Penales View UI */}
+                  {editingMatchId !== match.id && match.penaltiesHome !== undefined && match.penaltiesHome !== null && (
+                    <div style={{ fontSize: '0.9rem', color: 'var(--warning)', fontWeight: 'bold', marginTop: '5px' }}>
+                      ({match.penaltiesHome}) PENALES ({match.penaltiesAway})
+                    </div>
                   )}
                 </div>
 

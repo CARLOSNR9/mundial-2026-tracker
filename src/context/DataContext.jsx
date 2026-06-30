@@ -203,11 +203,14 @@ export const DataProvider = ({ children }) => {
         b16 = b16.map(m => {
           const dbMatch = dbData.find(dm => dm.id === m.id);
           if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
+            const isPen = dbMatch.status && dbMatch.status.startsWith('finished_pen_');
             return {
               ...m,
               scoreHome: dbMatch.score_home,
               scoreAway: dbMatch.score_away,
-              status: dbMatch.status || 'finished'
+              status: dbMatch.status || 'finished',
+              penaltiesHome: isPen ? parseInt(dbMatch.status.split('_')[2]) : null,
+              penaltiesAway: isPen ? parseInt(dbMatch.status.split('_')[3]) : null
             };
           }
           return m;
@@ -221,11 +224,18 @@ export const DataProvider = ({ children }) => {
     if (bracket16.length === 0) return;
 
     const getWinner = (match) => {
-      if (!match || match.status !== 'finished' || match.scoreHome === undefined || match.scoreHome === null) {
+      const isFinished = match && (match.status === 'finished' || (match.status && match.status.startsWith('finished_pen_')));
+      if (!isFinished || match.scoreHome === undefined || match.scoreHome === null) {
         return { name: 'Por definir', flag: '❓' };
       }
       if (match.scoreHome > match.scoreAway) return match.home;
       if (match.scoreAway > match.scoreHome) return match.away;
+      
+      if (match.penaltiesHome !== undefined && match.penaltiesHome !== null && match.penaltiesAway !== undefined && match.penaltiesAway !== null) {
+        if (match.penaltiesHome > match.penaltiesAway) return match.home;
+        if (match.penaltiesAway > match.penaltiesHome) return match.away;
+      }
+      
       return match.home; // Fallback for ties for now
     };
 
@@ -237,11 +247,14 @@ export const DataProvider = ({ children }) => {
       return matchesArray.map(m => {
         const dbMatch = dbData.find(dm => dm.id === m.id);
         if (dbMatch && dbMatch.score_home !== null && dbMatch.score_away !== null) {
+          const isPen = dbMatch.status && dbMatch.status.startsWith('finished_pen_');
           return {
             ...m,
             scoreHome: dbMatch.score_home,
             scoreAway: dbMatch.score_away,
-            status: dbMatch.status || 'finished'
+            status: dbMatch.status || 'finished',
+            penaltiesHome: isPen ? parseInt(dbMatch.status.split('_')[2]) : null,
+            penaltiesAway: isPen ? parseInt(dbMatch.status.split('_')[3]) : null
           };
         }
         return m;
@@ -291,21 +304,25 @@ export const DataProvider = ({ children }) => {
 
   }, [bracket16, dbData]);
 
-  const updateMatch = async (matchId, scoreHome, scoreAway) => {
+  const updateMatch = async (matchId, scoreHome, scoreAway, penHome = null, penAway = null) => {
     const home = parseInt(scoreHome) || 0;
     const away = parseInt(scoreAway) || 0;
+    let finalStatus = 'finished';
+    if (penHome !== null && penAway !== null) {
+      finalStatus = `finished_pen_${penHome}_${penAway}`;
+    }
 
     // Actualización local
     if (matchId <= 72) {
       setMatches(prev => prev.map(m => 
         m.id === matchId 
-          ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
+          ? { ...m, scoreHome: home, scoreAway: away, status: finalStatus, penaltiesHome: penHome, penaltiesAway: penAway }
           : m
       ));
     } else if (matchId <= 88) {
       setBracket16(prev => prev.map(m => 
         m.id === matchId 
-          ? { ...m, scoreHome: home, scoreAway: away, status: 'finished' }
+          ? { ...m, scoreHome: home, scoreAway: away, status: finalStatus, penaltiesHome: penHome, penaltiesAway: penAway }
           : m
       ));
     }
@@ -315,9 +332,9 @@ export const DataProvider = ({ children }) => {
       setDbData(prev => {
         const exists = prev.find(dm => dm.id === matchId);
         if (exists) {
-          return prev.map(dm => dm.id === matchId ? { ...dm, score_home: home, score_away: away, status: 'finished' } : dm);
+          return prev.map(dm => dm.id === matchId ? { ...dm, score_home: home, score_away: away, status: finalStatus } : dm);
         }
-        return [...prev, { id: matchId, score_home: home, score_away: away, status: 'finished' }];
+        return [...prev, { id: matchId, score_home: home, score_away: away, status: finalStatus }];
       });
     }
 
@@ -329,7 +346,7 @@ export const DataProvider = ({ children }) => {
           id: matchId, 
           score_home: home, 
           score_away: away, 
-          status: 'finished' 
+          status: finalStatus 
         });
 
       if (error) throw error;

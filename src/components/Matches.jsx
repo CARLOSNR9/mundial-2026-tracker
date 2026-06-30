@@ -7,6 +7,8 @@ const Matches = () => {
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editScoreHome, setEditScoreHome] = useState('');
   const [editScoreAway, setEditScoreAway] = useState('');
+  const [editPenHome, setEditPenHome] = useState('');
+  const [editPenAway, setEditPenAway] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -132,14 +134,22 @@ const Matches = () => {
     if (isMatchLive(match) && (match.scoreHome === undefined || match.scoreHome === null)) {
       setEditScoreHome(0);
       setEditScoreAway(0);
+      setEditPenHome('');
+      setEditPenAway('');
     } else {
       setEditScoreHome(match.scoreHome ?? '');
       setEditScoreAway(match.scoreAway ?? '');
+      setEditPenHome(match.penaltiesHome ?? '');
+      setEditPenAway(match.penaltiesAway ?? '');
     }
   };
 
   const handleSave = (matchId) => {
-    updateMatch(matchId, editScoreHome, editScoreAway);
+    const isKnockout = matchId > 72;
+    const isTied = editScoreHome !== '' && editScoreAway !== '' && parseInt(editScoreHome) === parseInt(editScoreAway);
+    const penH = (isKnockout && isTied && editPenHome !== '') ? parseInt(editPenHome) : null;
+    const penA = (isKnockout && isTied && editPenAway !== '') ? parseInt(editPenAway) : null;
+    updateMatch(matchId, editScoreHome, editScoreAway, penH, penA);
     setEditingMatchId(null);
   };
 
@@ -244,7 +254,33 @@ const Matches = () => {
                         )
                       )}
                     </div>
+                    </div>
                   </div>
+
+                  {/* Penales Editing UI */}
+                  {editingMatchId === match.id && match.id > 72 && editScoreHome !== '' && editScoreAway !== '' && parseInt(editScoreHome) === parseInt(editScoreAway) && (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--warning)', fontWeight: 'bold' }}>PENALES</span>
+                      <input 
+                        type="number" min="0" value={editPenHome} 
+                        onChange={e => setEditPenHome(e.target.value)} 
+                        style={{ width: '40px', background: 'rgba(255,255,255,0.1)', color: 'var(--warning)', border: '1px solid var(--warning)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
+                      />
+                      <span style={{ color: 'var(--text-muted)' }}>-</span>
+                      <input 
+                        type="number" min="0" value={editPenAway} 
+                        onChange={e => setEditPenAway(e.target.value)} 
+                        style={{ width: '40px', background: 'rgba(255,255,255,0.1)', color: 'var(--warning)', border: '1px solid var(--warning)', borderRadius: '4px', textAlign: 'center', padding: '5px' }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Penales View UI */}
+                  {editingMatchId !== match.id && match.penaltiesHome !== undefined && match.penaltiesHome !== null && (
+                    <div style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--warning)', fontWeight: 'bold', marginTop: '10px' }}>
+                      ({match.penaltiesHome}) PENALES ({match.penaltiesAway})
+                    </div>
+                  )}
 
                   {editingMatchId === match.id ? (
                     <div style={{ textAlign: 'center', marginTop: '15px' }}>
