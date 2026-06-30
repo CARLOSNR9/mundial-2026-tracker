@@ -128,7 +128,7 @@ const calculateBracket16 = () => {
     { id: 81, home: teams.france, away: teams.sweden, label: '16avos 2', date: 'Mar 30 Jun 16:00 hrs.', stadium: 'Mercedes-Benz Stadium, Atlanta' },
     { id: 73, home: teams.south_africa, away: teams.canada, label: '16avos 3', date: 'Dom 28 Jun 14:00 hrs.', stadium: 'BMO Field, Toronto' },
     { id: 80, home: teams.netherlands, away: teams.morocco, label: '16avos 4', date: 'Lun 29 Jun 20:00 hrs.', stadium: 'BC Place, Vancouver' },
-    { id: 84, home: teams.switzerland, away: teams.algeria, label: '16avos 5', date: 'Jue 2 Jul 22:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
+    { id: 84, home: teams.portugal, away: teams.croatia, label: '16avos 5', date: 'Jue 2 Jul 22:00 hrs.', stadium: 'Estadio BBVA, Monterrey' },
     { id: 86, home: teams.spain, away: teams.austria, label: '16avos 6', date: 'Jue 2 Jul 14:00 hrs.', stadium: 'Hard Rock Stadium, Miami' },
     { id: 85, home: teams.usa, away: teams.bosnia, label: '16avos 7', date: 'Mié 1 Jul 19:00 hrs.', stadium: 'Lumen Field, Seattle' },
     { id: 77, home: teams.belgium, away: teams.senegal, label: '16avos 8', date: 'Mié 1 Jul 15:00 hrs.', stadium: 'NRG Stadium, Houston' },
@@ -140,7 +140,7 @@ const calculateBracket16 = () => {
     { id: 87, home: teams.england, away: teams.dr_congo, label: '16avos 12', date: 'Mié 1 Jul 11:00 hrs.', stadium: 'Lincoln Financial Field, Filadelfia' },
     { id: 88, home: teams.argentina, away: teams.cape_verde, label: '16avos 13', date: 'Vie 3 Jul 17:00 hrs.', stadium: 'NRG Stadium, Houston' },
     { id: 78, home: teams.australia, away: teams.egypt, label: '16avos 14', date: 'Vie 3 Jul 13:00 hrs.', stadium: 'Arrowhead, Kansas City' },
-    { id: 79, home: teams.portugal, away: teams.croatia, label: '16avos 15', date: 'Jue 2 Jul 18:00 hrs.', stadium: 'Levi\'s Stadium, Santa Clara' },
+    { id: 79, home: teams.switzerland, away: teams.algeria, label: '16avos 15', date: 'Jue 2 Jul 18:00 hrs.', stadium: 'Levi\'s Stadium, Santa Clara' },
     { id: 83, home: teams.colombia, away: teams.ghana, label: '16avos 16', date: 'Vie 3 Jul 20:30 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
   ];
 
