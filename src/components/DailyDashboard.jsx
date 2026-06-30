@@ -198,7 +198,9 @@ const DailyDashboard = () => {
               }}>
               
               <div className="match-header" style={{ marginBottom: '15px', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>{match.label} - {match.stadium}</span>
+                <span style={{ color: 'var(--text-muted)' }}>
+                  {match.label} {match.stadium && `- 📍 ${match.stadium}`}
+                </span>
                 {live ? (
                   <span className="live-badge" style={{ fontSize: '1rem', padding: '5px 10px' }}>
                     <div className="live-dot" style={{ width: '10px', height: '10px' }}></div>
@@ -324,6 +326,11 @@ const DailyDashboard = () => {
                 <span>{match.date}</span>
                 <span>{match.label}</span>
               </div>
+              {match.stadium && (
+                <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--primary)', opacity: 0.9, marginTop: '-5px' }}>
+                  📍 {match.stadium}
+                </div>
+              )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '40%' }}>
                   <span style={{ fontSize: '1.5rem' }}>{match.home.flag}</span>
