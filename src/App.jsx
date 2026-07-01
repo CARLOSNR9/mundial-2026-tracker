@@ -8,6 +8,8 @@ import GeneralTable from './components/GeneralTable';
 import TeamSearch from './components/TeamSearch';
 import TeamProfileModal from './components/TeamProfileModal';
 import { DataProvider } from './context/DataContext';
+import { Flame, Trophy, TableProperties, CalendarDays, Target } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
 
 import logo from './assets/logo2026.png';
 
@@ -32,31 +34,31 @@ const App = () => {
         className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
         onClick={() => setActiveTab('dashboard')}
       >
-        <span>🔥</span> Hoy
+        <Flame size={20} /> <span style={{ marginLeft: '6px' }}>Hoy</span>
       </button>
       <button 
         className={`nav-btn ${activeTab === 'bracket' ? 'active' : ''}`}
         onClick={() => setActiveTab('bracket')}
       >
-        <span>🏆</span> Cuadro
+        <Trophy size={20} /> <span style={{ marginLeft: '6px' }}>Cuadro</span>
       </button>
       <button 
         className={`nav-btn ${activeTab === 'standings' ? 'active' : ''}`}
         onClick={() => setActiveTab('standings')}
       >
-        <span>📊</span> Grupos
+        <TableProperties size={20} /> <span style={{ marginLeft: '6px' }}>Grupos</span>
       </button>
       <button 
         className={`nav-btn ${activeTab === 'matches' ? 'active' : ''}`}
         onClick={() => setActiveTab('matches')}
       >
-        <span>⚽</span> Partidos
+        <CalendarDays size={20} /> <span style={{ marginLeft: '6px' }}>Partidos</span>
       </button>
       <button 
         className={`nav-btn ${activeTab === 'scorers' ? 'active' : ''}`}
         onClick={() => setActiveTab('scorers')}
       >
-        <span>👟</span> Goleadores
+        <Target size={20} /> <span style={{ marginLeft: '6px' }}>Goleadores</span>
       </button>
     </nav>
   );
@@ -85,6 +87,7 @@ const App = () => {
         
         {/* Modals */}
         <TeamProfileModal />
+        <Toaster position="top-center" toastOptions={{ style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--primary)', backdropFilter: 'blur(10px)' } }} />
       </div>
     </DataProvider>
   );

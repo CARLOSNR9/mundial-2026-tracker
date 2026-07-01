@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 import { matchCuriosities } from '../data/curiosities';
+import { Edit2, Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const DailyDashboard = () => {
   const { bracket16, updateMatch } = useContext(DataContext);
@@ -20,7 +22,12 @@ const DailyDashboard = () => {
   }, []);
 
   if (!bracket16 || bracket16.length === 0) {
-    return <div style={{ textAlign: 'center', padding: '20px' }}>Cargando dashboard...</div>;
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '50px 20px', color: 'var(--primary)' }}>
+        <Loader2 size={48} style={{ animation: 'spin 1s linear infinite', marginBottom: '15px' }} />
+        <p style={{ color: 'var(--text-muted)' }}>Cargando dashboard...</p>
+      </div>
+    );
   }
 
   // Get next opponent logic based on bracket array index
@@ -181,6 +188,7 @@ const DailyDashboard = () => {
     
     updateMatch(matchId, editScoreHome, editScoreAway, penH, penA);
     setEditingMatchId(null);
+    toast.success('Resultado guardado');
   };
 
   return (
@@ -202,28 +210,39 @@ const DailyDashboard = () => {
 
           return (
             <div key={match.id} className={`glass match-card ${live ? 'live-match-card' : ''}`} 
-              onDoubleClick={() => { if (live || match.status === 'finished') startEditing(match); }}
               style={{
                 padding: '20px',
                 border: live ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)',
                 boxShadow: live ? '0 0 20px rgba(0, 255, 136, 0.3)' : 'none',
                 transform: live ? 'scale(1.02)' : 'none',
-                transition: 'all 0.3s ease',
-                cursor: (live || match.status === 'finished') ? 'pointer' : 'default'
+                transition: 'all 0.3s ease'
               }}>
               
-              <div className="match-header" style={{ marginBottom: '15px', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
+              <div className="match-header" style={{ marginBottom: '15px', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px', alignItems: 'center' }}>
                 <span style={{ color: 'var(--text-muted)' }}>
                   {match.label} {match.stadium && `- 📍 ${match.stadium}`}
                 </span>
-                {live ? (
-                  <span className="live-badge" style={{ fontSize: '1rem', padding: '5px 10px' }}>
-                    <div className="live-dot" style={{ width: '10px', height: '10px' }}></div>
-                    EN VIVO
-                  </span>
-                ) : (
-                  <span style={{ fontWeight: 'bold' }}>{match.date.split(' ')[3]} {match.date.split(' ')[4]}</span>
-                )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  {(live || match.status === 'finished') && editingMatchId !== match.id && (
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); startEditing(match); }}
+                      style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                      onMouseOver={(e) => e.currentTarget.style.color = 'var(--primary)'}
+                      onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+                      title="Editar Resultado"
+                    >
+                      <Edit2 size={16} /> <span style={{ fontSize: '0.8rem' }} className="hide-on-mobile">Editar</span>
+                    </button>
+                  )}
+                  {live ? (
+                    <span className="live-badge" style={{ fontSize: '1rem', padding: '5px 10px' }}>
+                      <div className="live-dot" style={{ width: '10px', height: '10px' }}></div>
+                      EN VIVO
+                    </span>
+                  ) : (
+                    <span style={{ fontWeight: 'bold' }}>{match.date.split(' ')[3]} {match.date.split(' ')[4]}</span>
+                  )}
+                </div>
               </div>
               
               <div className="match-teams" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>

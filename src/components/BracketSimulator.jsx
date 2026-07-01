@@ -1,11 +1,18 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
+import { Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const BracketSimulator = () => {
   const { bracket16, bracket8, bracket4, bracket2, bracket1, standings, setSelectedTeamId, simulateRestOfTournament, undoSimulation } = useContext(DataContext);
 
   if (!bracket16 || bracket16.length === 0) {
-    return <div style={{ textAlign: 'center', padding: '20px' }}>Calculando cuadro...</div>;
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '50px 20px', color: 'var(--primary)' }}>
+        <Loader2 size={48} style={{ animation: 'spin 1s linear infinite', marginBottom: '15px' }} />
+        <p style={{ color: 'var(--text-muted)' }}>Calculando cuadro...</p>
+      </div>
+    );
   }
 
   const left16 = bracket16.slice(0, 8);
@@ -116,7 +123,7 @@ const BracketSimulator = () => {
         
         <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '15px' }}>
           <button 
-            onClick={simulateRestOfTournament}
+            onClick={() => { simulateRestOfTournament(); toast.success('Torneo simulado automáticamente'); }}
             style={{
               padding: '10px 20px',
               backgroundColor: 'var(--primary)',
@@ -138,7 +145,7 @@ const BracketSimulator = () => {
           </button>
           
           <button 
-            onClick={undoSimulation}
+            onClick={() => { undoSimulation(); toast.success('Simulación deshecha'); }}
             style={{
               padding: '10px 20px',
               backgroundColor: 'transparent',
