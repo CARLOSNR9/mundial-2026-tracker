@@ -136,7 +136,7 @@ const calculateBracket16 = () => {
     // Lado Derecho
     { id: 75, home: teams.brazil, away: teams.japan, label: '16avos 9', date: 'Lun 29 Jun 12:00 hrs.', stadium: 'SoFi Stadium, Los Ángeles' },
     { id: 82, home: teams.ivory_coast, away: teams.norway, label: '16avos 10', date: 'Mar 30 Jun 12:00 hrs.', stadium: 'AT&T Stadium, Dallas' },
-    { id: 74, home: teams.mexico, away: teams.ecuador, label: '16avos 11', date: 'Mar 30 Jun 20:00 hrs.', stadium: 'Estadio Akron, Guadalajara' },
+    { id: 74, home: teams.mexico, away: teams.ecuador, label: '16avos 11', date: 'Mar 30 Jun 21:00 hrs.', stadium: 'Estadio Akron, Guadalajara' },
     { id: 87, home: teams.england, away: teams.dr_congo, label: '16avos 12', date: 'Mié 1 Jul 11:00 hrs.', stadium: 'Lincoln Financial Field, Filadelfia' },
     { id: 88, home: teams.argentina, away: teams.cape_verde, label: '16avos 13', date: 'Vie 3 Jul 17:00 hrs.', stadium: 'NRG Stadium, Houston' },
     { id: 78, home: teams.australia, away: teams.egypt, label: '16avos 14', date: 'Vie 3 Jul 13:00 hrs.', stadium: 'Arrowhead, Kansas City' },
